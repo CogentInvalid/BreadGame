@@ -14,18 +14,21 @@ function loadAssets()
 	grid = {}
 	animation = {}
 
-	--bread-running
-	--150 by 150
 	grid["bread-running"] = anim8.newGrid(150, 150, 600, 600)
 	animation["bread-running"] = anim8.newAnimation(grid["bread-running"]('1-4','1-4'), 0.04)
+
 	grid["bread-falling"] = anim8.newGrid(75, 75, 300, 300)
 	animation["bread-falling"] = anim8.newAnimation(grid["bread-falling"]('1-4',1,'1-4',2,'1-4',3,'1-3',4), 0.04)
+
 	grid["bread-parachuting"] = anim8.newGrid(150, 150, 900, 450)
 	animation["bread-parachuting"] = anim8.newAnimation(grid["bread-parachuting"]('1-6','1-3'), 0.04)
+
 	grid["toaster-running"] = anim8.newGrid(200, 150, 400, 600)
 	animation["toaster-running"] = anim8.newAnimation(grid["toaster-running"]('1-2','1-4'), 0.04)
+
 	grid["toaster-groundpound"] = anim8.newGrid(200, 150, 400, 450)
 	animation["toaster-groundpound"] = anim8.newAnimation(grid["toaster-groundpound"]('1-2','1-3'), 0.04, 'pauseAtEnd')
+
 	grid["fire"] = anim8.newGrid(150, 150, 600, 750)
 	animation["fire"] = anim8.newAnimation(grid["fire"]('1-4',1,'1-4',2,'1-4',3,'1-4',4,'1-3',5), 0.04)
 

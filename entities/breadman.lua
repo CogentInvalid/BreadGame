@@ -7,7 +7,7 @@ function breadman:init(args)
 	self.x = args[1]
 	self.y = args[2]
 	self.px = self.x; self.py = self.y --player's position last frame
-	self.vx = 0; self.vy = -300 --velocity
+	self.vx = 0; self.vy = 0 --velocity
 	self.w = 40; self.h = 40 --width/height
 
 	self.moveDir = randSign()
@@ -106,8 +106,9 @@ function breadman:resolveCollision(entity, dir)
 			self:hitSide(entity, dir)
 		end
 		if entity.id == "projectile" then
-			if entity.friendly then
+			if entity.friendly and self.dead == false then
 				self.dead = true
+				numEnemies = numEnemies - 1
 				self.vy = -200
 			end
 		end

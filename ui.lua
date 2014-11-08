@@ -21,4 +21,10 @@ function game:drawUI()
 	love.graphics.setColor(255,255,255,self.uiFlash)
 	love.graphics.rectangle("fill", ((3-1)*131)+235, 50, 80, 80)
 
+	--arrow
+	if numEnemies == 0 then
+		love.graphics.setColor(255,255,255)
+		love.graphics.draw(img["arrow"], gameWidth-100, gameHeight/2-20, 0, 0.15, 0.15)
+	end
+
 end

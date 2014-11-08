@@ -37,8 +37,12 @@ function player:update(dt)
 		self.vx = -self.vx
 	end
 	if self.x+self.w > gameWidth then
-		self.x = gameWidth-self.w
-		self.vx = -self.vx
+		if numEnemies > 0 then
+			self.x = gameWidth-self.w
+			self.vx = -self.vx
+		else
+			gameMode:nextLevel()
+		end
 	end
 
 	--movement
@@ -165,6 +169,7 @@ function player:resolveCollision(entity, dir)
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
 					entity.die = true
+					numEnemies = numEnemies - 1
 					gameMode:addBread(entity.id)
 				else
 					entity.vx = ((entity.x+entity.w/2)-(self.x+self.w/2))*5

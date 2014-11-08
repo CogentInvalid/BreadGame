@@ -14,9 +14,10 @@ end
 
 function breadSlot:update(dt)
 	if self.type == "breadman" then
-		if self.health > 33 then self.imgName = "bread-dead-tan" end
-		if self.health > 66 then self.imgName = "bread-dead-white" end
-		if self.health < 33 then self.imgName = "bread-dead-black" end
+		self.imgName = "bread-dead-black"
+		if self.health > 33 then self.imgName = "bread-dead-brown" end
+		if self.health > 55 then self.imgName = "bread-dead-tan" end
+		if self.health > 77 then self.imgName = "bread-dead-white" end
 		self.img = img[self.imgName]
 	end
 end

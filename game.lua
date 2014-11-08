@@ -39,9 +39,6 @@ function game:init()
 	--draw order
 	self.drawOrder = {"background", "platform", "breadman", "player", "projectile"}
 
-	--load level
-	self:loadLevel(1) --in levels.lua
-
 	--camera
 	cam = gamera.new(-10000,-10000,gameWidth+20000,gameHeight+20000)
 	--cam:setScale(0.6)
@@ -56,7 +53,14 @@ function game:init()
 	self.uiFlash = 0
 
 	--bread spawning
+	numEnemies = 0
+	numSpecial = 0
+	spawnQueue = {}
 	breadSpawnTimer = 3
+
+	--load level
+	currentLevel = 1
+	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false
 
@@ -91,8 +95,13 @@ function game:update(delta)
 
 		--enemy spawning
 		breadSpawnTimer = breadSpawnTimer - dt
-		if breadSpawnTimer < 0 then
-			self:spawnEnemy()
+		if breadSpawnTimer < 0 and (numSpecial > 0 or #spawnQueue > 0) then
+			if #spawnQueue > 0 then
+				self:spawnEnemy(spawnQueue[1])
+				table.remove(spawnQueue, 1)
+			else
+				self:randSpawn()
+			end
 			breadSpawnTimer = 2
 		end
 
@@ -148,22 +157,27 @@ function game:ejectBread()
 	end
 end
 
-function game:spawnEnemy()
+function game:randSpawn()
 	local choice = {"top", "side"}
 	local weight = {1,1}
 	local selection = weightedRandom(choice, weight)
+	self:spawnEnemy(selection)
+end
+
+function game:spawnEnemy(selection)
 	if selection == "top" then
 		local xPos = math.random(0, gameWidth - 40)
 		self:addEnt(breadman,{xPos, -40, true})
 	else
 		if math.random(2) == 1 then
 			local e = self:addEnt(breadman,{-50, gameHeight - 50, false})
-			e.vx = 50
+			e.vx = 50; e.vy = -300
 		else
 			local e = self:addEnt(breadman,{gameWidth+10, gameHeight - 50, false})
-			e.vx = -50
+			e.vx = -50; e.vy = -300
 		end
 	end
+	numEnemies = numEnemies + 1
 end
 
 function game:addEnt(type, args)
@@ -201,8 +215,8 @@ function game:draw()
 
 		--debug
 		love.graphics.setColor(0,0,0)
-		love.graphics.print(love.mouse.getX(), 10, 10)
-		love.graphics.print(love.mouse.getY(), 10, 25)
+		love.graphics.print(numEnemies, 10, 10)
+		love.graphics.print(numSpecial, 10, 25)
 	end)
 end
 
