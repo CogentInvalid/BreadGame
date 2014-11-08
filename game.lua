@@ -93,7 +93,7 @@ function game:update(delta)
 		breadSpawnTimer = breadSpawnTimer - dt
 		if breadSpawnTimer < 0 then
 			self:spawnEnemy()
-			breadSpawnTimer = 3
+			breadSpawnTimer = 2
 		end
 
 		--iterate over every entity "entity" in the game
@@ -139,7 +139,7 @@ end
 function game:ejectBread()
 	if breadSlots[3].type ~= "none" then
 		if breadSlots[3].health < 33 then
-			self:addEnt(projectile,{p.x, p.y, 40, 40, true, "bread-dead-black", p.moveDir*400+p.vx/2, -10+p.vy/2, 100, 2})
+			self:addEnt(projectile,{p.x, p.y, 40, 40, true, "bread-dead-black", p.moveDir*400+p.vx/2, -80+p.vy/2, 250, 2})
 		else
 			self:addEnt(projectile,{p.x, p.y, 40, 40, false, breadSlots[3].imgName, p.moveDir*40+p.vx/2, -200+p.vy/2, 500, 2})
 		end
@@ -150,7 +150,7 @@ end
 
 function game:spawnEnemy()
 	local choice = {"top", "side"}
-	local weight = {1,0.8}
+	local weight = {1,1}
 	local selection = weightedRandom(choice, weight)
 	if selection == "top" then
 		local xPos = math.random(0, gameWidth - 40)
