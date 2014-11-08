@@ -31,11 +31,10 @@ function game:init()
 
 	--entities
 	ent = {}
-	p = self:addEnt(player,{20,20})
-	p = ent[1]
-	self:addEnt(platform,{0, gameHeight-20, gameWidth, 40})
-	self:addEnt(breadman,{20, gameHeight - 80})
-	self:addEnt(breadman,{100, gameHeight - 80})
+	p = self:addEnt(player,{20,20}) --"p" always refers to the player
+
+	--load level
+	self:loadLevel(1) --in levels.lua
 
 	--camera
 	cam = gamera.new(-10000,-10000,gameWidth+20000,gameHeight+20000)
@@ -88,7 +87,8 @@ function game:update(delta)
 		--enemy spawning
 		breadSpawnTimer = breadSpawnTimer - dt
 		if breadSpawnTimer < 0 then
-			self:addEnt(breadman,{20, gameHeight - 80})
+			local xPos = math.random(0, gameWidth - 40)
+			self:addEnt(breadman,{xPos, -40, true})
 			breadSpawnTimer = 3
 
 		end
@@ -106,6 +106,11 @@ function game:update(delta)
 			if ent[i].col then genericCollide(ent[i], ent[i].collideOrder) end
 		end
 
+		--update animations
+		for i, anim in pairs(animation) do
+			anim:update(dt)
+		end
+
 		--debug
 		anim:update(dt)
 
@@ -115,9 +120,9 @@ function game:update(delta)
 end
 
 --find breadmen near ground pound at x, y and launch them into the air
-function game:pound(x, y)
+function game:pound(x, y, num)
 	for i,entity in ipairs(ent) do
-		if entity.id == "breadman" then
+		if entity.id == "breadman" and entity.standingOn == num then
 			if math.abs(entity.y+entity.h - y) < 10 then
 				entity.y = entity.y - 5
 				local distance = math.abs(entity.x+entity.w/2-x)
@@ -148,7 +153,7 @@ end
 function game:draw()
 	cam:draw(function(l,t,w,h)
 		love.graphics.setColor(100,100,255)
-		love.graphics.rectangle("fill", 0, 0, gameWidth, gameHeight)
+		love.graphics.rectangle("fill", -10, -10, gameWidth+20, gameHeight+20)
 		for i=1, #ent do
 			ent[i]:draw()
 		end
@@ -161,6 +166,10 @@ function game:draw()
 		love.graphics.setColor(255,255,255)
 		--love.graphics.draw(img["gif2"], 10, 10)
 		anim:draw(img["gif2"], 100, 200)
+
+		love.graphics.setColor(0,0,0)
+		love.graphics.print(love.mouse.getX(), 10, 10)
+		love.graphics.print(love.mouse.getY(), 10, 25)
 	end)
 end
 

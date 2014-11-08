@@ -8,6 +8,8 @@ function platform:init(args)
 	self.px = self.x; self.py = self.y
 	self.w = args[3]; self.h = args[4]
 
+	self.num = args[5]
+
 	self.col = false
 	self.rcol = true
 	self.die = false
@@ -18,6 +20,6 @@ function platform:update(dt)
 end
 
 function platform:draw()
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(160,140,0)
 	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end

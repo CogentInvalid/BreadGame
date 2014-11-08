@@ -12,6 +12,8 @@ function player:init(args)
 
 	self.maxSpeed = 200 --horizontal movement speed
 	self.airControl = false --can player use variable jump height?
+	self.onGround = false
+	self.standingOn = 0
 
 	self.hp = 100
 
@@ -81,9 +83,9 @@ function player:update(dt)
 	if self.onGround then
 		self.allowJump = true
 		self.airControl = true
-		if self.vx > 0 then self.vx = self.vx - (600*dt)
-		else if self.vx < 0 then self.vx = self.vx + (600*dt) end end
-		if self.vx > -6 and self.vx < 6 then self.vx = 0 end
+		if self.vx > 0 then self.vx = self.vx - (700*dt)
+		else if self.vx < 0 then self.vx = self.vx + (700*dt) end end
+		if self.vx > -7 and self.vx < 7 then self.vx = 0 end
 	end
 
 	self.px = self.x --magic
@@ -110,19 +112,19 @@ function player:jump()
 	end
 end
 
-function player:pound()
+function player:pound(ent)
 	if self.pounding then
 		self.pounding = false
 		screenShake = 10*(self.vy/1000)
-		gameMode:pound(self.x+self.w/2, self.y+self.h)
+		gameMode:pound(self.x+self.w/2, self.y+self.h, ent.num)
 	end
 end
 
 function player:hitSide(ent, dir)
-	if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
-	if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
-	if dir == "up" then self.y = ent.y-self.h; self:pound(); self.vy = 0; self.onGround = true end
-	if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
+	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
+	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
+	if dir == "up" then self.y = ent.y-self.h; self:pound(ent); self.vy = 0; self.onGround = true end
+	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
 function player:resolveCollision(entity, dir)
@@ -131,7 +133,7 @@ function player:resolveCollision(entity, dir)
 			self:hitSide(entity, dir)
 		end
 		if entity.id == "breadman" then
-			if dir ~= "down" then
+			if dir ~= "down" or entity.standingOn ~= 0 then
 				--get hurt
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then

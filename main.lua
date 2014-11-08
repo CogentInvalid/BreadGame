@@ -2,6 +2,7 @@ anim8 = require "libs/anim8"
 require "libs/class"
 require "libs/angle"
 require "assets"
+require "levels"
 require "game"
 
 function love.load()

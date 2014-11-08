@@ -13,6 +13,9 @@ function breadman:init(args)
 	self.moveDir = randSign()
 	self.flipTimer = 5
 	self.onGround = false
+	self.standingOn = 0
+
+	self.hasParachute = args[3]
 
 	--does it collide with things
 	self.col = true
@@ -50,6 +53,7 @@ function breadman:update(dt)
 
 	--gravity
 	local maxFall = 600
+	if self.hasParachute then maxFall = 150 end
 	if self.vy < maxFall then
 		--falling
 		self.vy = self.vy + (400*dt)
@@ -58,9 +62,10 @@ function breadman:update(dt)
 
 	--friction
 	if self.onGround then
-		--nothing
+		self.hasParachute = false
 	else
 		self.flipTimer = math.random()*4+3
+		self.standingOn = 0
 	end
 
 	self.onGround = false
@@ -74,15 +79,16 @@ function breadman:update(dt)
 
 end
 
-function breadman:land() --ehhhh
+function breadman:land(ent) --ehhhh
 	self.onGround = true
+	self.standingOn = ent.num
 end
 
 function breadman:hitSide(ent, dir)
-	if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
-	if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
-	if dir == "up" then self.y = ent.y-self.h; self.vy = 0; self:land() end
-	if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
+	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
+	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
+	if dir == "up" then self.y = ent.y-self.h; self.vy = 0; self:land(ent) end
+	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
 function breadman:resolveCollision(entity, dir)
@@ -94,6 +100,10 @@ function breadman:resolveCollision(entity, dir)
 end
 
 function breadman:draw()
-	love.graphics.setColor(100,100,100)
-	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	love.graphics.setColor(255,255,255)
+	animation["bread-running"]:draw(img["bread-running"], self.x+20, self.y+10, 0 ,0.5*self.moveDir, 0.5, 75, 75)
+	if gameMode.showHitboxes then
+		love.graphics.setColor(255,0,0,150)
+		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	end
 end
