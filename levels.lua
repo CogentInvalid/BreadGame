@@ -41,12 +41,12 @@ function game:loadLevel(num)
 
 		--enemies
 		--{x, y, hasParachute}
-		self:addEnt(breadman,{500, gameHeight - 80, false})
-		self:addEnt(breadman,{200, gameHeight - 80, false})
+		self:addEnt(breadman,{500, gameHeight - 180, false})
+		self:addEnt(breadman,{200, gameHeight - 180, false})
 		numEnemies = 2
 		numSpecial = 0
 
-		spawnQueue = {"top"}
+		spawnQueue = {"top", "side"}
 
 	end
 

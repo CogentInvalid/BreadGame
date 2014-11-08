@@ -14,6 +14,7 @@ function breadman:init(args)
 	self.flipTimer = 5
 	self.onGround = false
 	self.standingOn = 0
+	self.checkTimer = 0
 
 	self.angle = 0
 
@@ -65,9 +66,32 @@ function breadman:update(dt)
 	end
 	if self.vy > maxFall then self.vy = maxFall end
 
+	self.checkTimer = self.checkTimer - dt
+	if self.checkTimer < 0 then self.checkTimer = 0 end
+
 	--friction
 	if self.onGround then
 		self.hasParachute = false
+
+		--check bottom
+		if self.checkTimer <= 0 then
+			local x = self.x+self.w/2
+			local y = self.y+self.h+2
+			local found = false
+			for i=1, #ent do
+				if ent[i].id == "platform" then
+					if x > ent[i].x and x < ent[i].x+ent[i].w and y > ent[i].y and y < ent[i].y+ent[i].h then
+						found = true
+					end
+				end
+			end
+			if not found then
+				self.vx = 0
+				self.moveDir = -self.moveDir
+				self.x = self.x + self.moveDir
+				self.checkTimer = 1
+			end
+		end
 	else
 		self.standingOn = 0
 	end

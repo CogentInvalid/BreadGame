@@ -168,7 +168,8 @@ function game:spawnEnemy(selection)
 	if selection == "top" then
 		local xPos = math.random(0, gameWidth - 40)
 		self:addEnt(breadman,{xPos, -40, true})
-	else
+	end
+	if selection == "side" then
 		if math.random(2) == 1 then
 			local e = self:addEnt(breadman,{-50, gameHeight - 50, false})
 			e.vx = 50; e.vy = -300
@@ -210,14 +211,14 @@ function game:draw()
 			end
 		end
 
-		--ui
-		self:drawUI()
-
 		--debug
 		love.graphics.setColor(0,0,0)
 		love.graphics.print(numEnemies, 10, 10)
 		love.graphics.print(numSpecial, 10, 25)
 	end)
+
+	--ui
+	self:drawUI()
 end
 
 function game:keypressed(key)
