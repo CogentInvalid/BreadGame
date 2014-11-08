@@ -5,6 +5,7 @@ require "entities/player"
 require "entities/platform"
 require "entities/breadman"
 require "entities/background"
+require "entities/projectile"
 
 --every entity requires:
 --self.id - identifier (e.g. player, breadman)
@@ -132,6 +133,14 @@ function game:pound(x, y, num)
 	end
 end
 
+--eject bread from last slot
+function game:ejectBread()
+	if breadSlots[3].type ~= "none" then
+		self:addEnt(projectile,{p.x, p.y, 20, 20, true, "bread-running", p.moveDir*200+p.vx/2, -80+p.vy/2, 100})
+		self:removeBread(3)
+	end
+end
+
 function game:addEnt(type, args)
 	local entity = type:new(args)
 	ent[#ent+1] = entity
@@ -168,5 +177,6 @@ end
 function game:keypressed(key)
 	if key == bind["jump"] then p:jump() end
 	if key == bind["down"] and (not p.onGround) then p.pounding = true end
+	if key == bind["attack"] then self:ejectBread() end
 	if key == "p" then self.showHitboxes = not self.showHitboxes end
 end

@@ -10,6 +10,7 @@ function player:init(args)
 	self.vx = 0; self.vy = 0 --velocity
 	self.w = 60; self.h = 40 --width/height
 
+	self.moveDir = 1
 	self.maxSpeed = 200 --horizontal movement speed
 	self.airControl = false --can player use variable jump height?
 	self.onGround = false
@@ -44,10 +45,12 @@ function player:update(dt)
 	if not love.keyboard.isDown("c") then
 		if love.keyboard.isDown(bind["left"]) and self.vx > -self.maxSpeed then
 			self.vx = self.vx-1500*dt
+			self.moveDir = -1
 			if self.vx < -self.maxSpeed then self.vx = -self.maxSpeed end
 		end
 		if love.keyboard.isDown(bind["right"]) and self.vx < self.maxSpeed then
 			self.vx = self.vx+1500*dt
+			self.moveDir = 1
 			if self.vx > self.maxSpeed then self.vx = self.maxSpeed end
 		end
 	end
@@ -135,6 +138,11 @@ function player:getHit(ent)
 	p.vy = ang.yPart * 400 - 100
 	self.hp = self.hp - 10
 	self.invuln = 2
+end
+
+function player:gainHP(amt)
+	self.hp = self.hp + amt
+	if self.hp > 100 then self.hp = 100 end
 end
 
 function player:hitSide(ent, dir)

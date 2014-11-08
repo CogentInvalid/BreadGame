@@ -41,7 +41,7 @@ function game:updateBreadSlots(dt)
 			breadSlots[i].health = breadSlots[i].health - 10*dt
 			if breadSlots[i].health < 0 then
 				--kill bread
-				p.hp = p.hp + 5
+				p:gainHP(5)
 				gameMode:removeBread(i)
 			end
 		end

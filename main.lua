@@ -25,6 +25,7 @@ function love.load()
 	bind["right"] = "right"
 	bind["down"] = "down"
 	bind["jump"] = "z"
+	bind["attack"] = "x"
 end
 
 function love.update(dt)

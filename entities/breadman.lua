@@ -23,6 +23,8 @@ function breadman:init(args)
 	self.rcol = true
 	self.collideOrder = {isReal} --no need to prioritize certain collisions
 
+	--display death animation?
+	self.dead = false
 	--delete this next frame?
 	self.die = false
 end
@@ -95,6 +97,11 @@ function breadman:resolveCollision(entity, dir)
 	if not love.keyboard.isDown("c") then
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
+		end
+		if entity.id == "projectile" then
+			if entity.friendly then
+				self.dead = true
+			end
 		end
 	end
 end
