@@ -16,6 +16,7 @@ function player:init(args)
 	self.standingOn = 0
 
 	self.hp = 100
+	self.invuln = 0
 
 	--does it collide with things
 	self.col = true
@@ -88,6 +89,12 @@ function player:update(dt)
 		if self.vx > -7 and self.vx < 7 then self.vx = 0 end
 	end
 
+	--invulnerability
+	if self.invuln > 0 then
+		self.invuln = self.invuln - dt
+	end
+	if self.invuln < 0 then self.invuln = 0 end
+
 	self.px = self.x --magic
 	self.py = self.y
 
@@ -120,6 +127,16 @@ function player:pound(ent)
 	end
 end
 
+function player:getHit(ent)
+	local dx = (self.x+self.w/2)-(ent.x+ent.w/2)
+	local dy = (self.y+self.h/2)-(ent.y+ent.h/2)
+	local ang = angle:new({dx, dy})
+	p.vx = ang.xPart * 400
+	p.vy = ang.yPart * 400 - 100
+	self.hp = self.hp - 10
+	self.invuln = 2
+end
+
 function player:hitSide(ent, dir)
 	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
@@ -134,7 +151,7 @@ function player:resolveCollision(entity, dir)
 		end
 		if entity.id == "breadman" then
 			if dir ~= "down" or entity.standingOn ~= 0 then
-				--get hurt
+				if self.invuln <= 0 then self:getHit(entity) end
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
 					entity.die = true
@@ -152,5 +169,6 @@ end
 
 function player:draw()
 	love.graphics.setColor(100,100,100)
+	if self.invuln > 0 then love.graphics.setColor(100,100,100,150) end
 	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end

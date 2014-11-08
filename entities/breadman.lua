@@ -102,6 +102,7 @@ end
 function breadman:draw()
 	love.graphics.setColor(255,255,255)
 	animation["bread-running"]:draw(img["bread-running"], self.x+20, self.y+10, 0 ,0.5*self.moveDir, 0.5, 75, 75)
+	if self.hasParachute then love.graphics.draw(img["parachute_bad"], self.x-30, self.y-50, 0, 0.5, 0.5) end
 	if gameMode.showHitboxes then
 		love.graphics.setColor(255,0,0,150)
 		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)

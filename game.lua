@@ -4,6 +4,7 @@ require "collisions"
 require "entities/player"
 require "entities/platform"
 require "entities/breadman"
+require "entities/background"
 
 --every entity requires:
 --self.id - identifier (e.g. player, breadman)
@@ -23,6 +24,7 @@ require "entities/breadman"
 game = class:new()
 
 require "breadSlot"
+require "ui"
 
 function game:init()
 
@@ -46,7 +48,7 @@ function game:init()
 
 	--bread slot
 	breadSlots = {}
-	for i=1, 3 do breadSlots[i] = breadSlot:new("none", gameWidth/2 + (i-2)*200-50, 50) end
+	for i=1, 3 do breadSlots[i] = breadSlot:new("none", gameWidth/2 + (i-2)*150-50, 50) end
 
 	--bread spawning
 	breadSpawnTimer = 3
@@ -57,11 +59,6 @@ function game:init()
 	dt = 0.01
 	accum = 0
 	frame = 0
-
-	--debug
-	img["gif2"] = love.graphics.newImage("resources/gif2.gif")
-	grid = anim8.newGrid(20, 20, 20, 20, 0, 0, 0)
-	anim = anim8.newAnimation(grid('1-1',1), 0.1)
 
 end
 
@@ -83,6 +80,9 @@ function game:update(delta)
 
 		--bread slots
 		self:updateBreadSlots(dt) --in breadSlot.lua
+
+		--ui
+		self:updateUI()
 
 		--enemy spawning
 		breadSpawnTimer = breadSpawnTimer - dt
@@ -110,9 +110,6 @@ function game:update(delta)
 		for i, anim in pairs(animation) do
 			anim:update(dt)
 		end
-
-		--debug
-		anim:update(dt)
 
 		accum = accum - 0.01
 	end
@@ -158,15 +155,10 @@ function game:draw()
 			ent[i]:draw()
 		end
 
-		for i=1, 3 do
-			breadSlots[i]:draw()
-		end
+		--ui
+		self:drawUI()
 
-		--testing stuff
-		love.graphics.setColor(255,255,255)
-		--love.graphics.draw(img["gif2"], 10, 10)
-		anim:draw(img["gif2"], 100, 200)
-
+		--debug
 		love.graphics.setColor(0,0,0)
 		love.graphics.print(love.mouse.getX(), 10, 10)
 		love.graphics.print(love.mouse.getY(), 10, 25)

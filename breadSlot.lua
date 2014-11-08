@@ -11,8 +11,7 @@ end
 
 function breadSlot:update(dt)
 	if self.type ~= "none" then
-		self.health = self.health - 10*dt
-		if self.health < 0 then self.die = true end
+
 	end
 end
 
@@ -42,6 +41,7 @@ function game:updateBreadSlots(dt)
 			breadSlots[i].health = breadSlots[i].health - 10*dt
 			if breadSlots[i].health < 0 then
 				--kill bread
+				p.hp = p.hp + 5
 				gameMode:removeBread(i)
 			end
 		end
