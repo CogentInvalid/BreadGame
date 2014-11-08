@@ -94,9 +94,6 @@ end
 function player:jump()
 	if self.onGround then
 		self.vy = -400
-		if math.abs(self.vx) > 100 then
-			self.vy = self.vy -(math.abs(self.vx)-100)/3
-		end
 	end
 end
 
@@ -104,6 +101,7 @@ function player:pound()
 	if self.pounding then
 		self.pounding = false
 		screenShake = 10*(self.vy/1000)
+		gameMode:pound(self.x+self.w/2, self.y+self.h)
 	end
 end
 
@@ -118,6 +116,20 @@ function player:resolveCollision(entity, dir)
 	if not love.keyboard.isDown("c") then
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
+		end
+		if entity.id == "breadman" then
+			if dir ~= "down" then
+				--get hurt
+			else
+				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
+					entity.die = true
+				else
+					entity.vx = ((entity.x+entity.w/2)-(self.x+self.w/2))*5
+					entity.moveDir = getSign(entity.vx)
+					entity.vy = -150
+					self.vy = 0
+				end
+			end
 		end
 	end
 end

@@ -73,6 +73,10 @@ function randSign()
 	if math.random(2) == 1 then return -1 else return 1 end
 end
 
+function getSign(x)
+	if x >= 0 then return 1 else return -1 end
+end
+
 function string:split(delimiter) --definitely not stolen from anything else
 	local result = {}
 	local from  = 1

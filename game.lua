@@ -3,6 +3,7 @@ local bump = require "bump" --rectangle collisions
 require "collisions"
 require "player"
 require "platform"
+require "breadman"
 
 game = class:new()
 
@@ -15,11 +16,12 @@ function game:init()
 	ent = {}
 	p = self:addEnt(player,{20,20})
 	p = ent[1]
-	self:addEnt(platform,{400, gameHeight-100, 100, 40})
+	self:addEnt(platform,{0, gameHeight-20, gameWidth, 40})
+	self:addEnt(breadman,{20, gameHeight - 80})
 
 	--camera
 	cam = gamera.new(-10000,-10000,gameWidth+20000,gameHeight+20000)
-	cam:setScale(0.8)
+	--cam:setScale(0.8)
 	cam:setPosition(gameWidth/2, gameHeight/2)
 	camx = round(cam.x,2); camy = round(cam.y,2)
 	camAngle = 0
@@ -72,6 +74,20 @@ function game:update(delta)
 	if accum>0.1 then accum = 0 end
 end
 
+--find breadmen near ground pound at x, y and launch them into the air
+function game:pound(x, y)
+	for i,entity in ipairs(ent) do
+		if entity.id == "breadman" then
+			if math.abs(entity.y+entity.h - y) < 10 then
+				entity.y = entity.y - 5
+				local distance = math.abs(entity.x+entity.w/2-x)
+				local magnitude = math.pow(2, -0.005*distance)
+				entity.vy = -600*magnitude
+			end
+		end
+	end
+end
+
 function game:addEnt(type, args)
 	local entity = type:new(args)
 	ent[#ent+1] = entity
@@ -80,11 +96,11 @@ function game:addEnt(type, args)
 	return entity
 end
 
-function game:removeEnt(i)
+function game:removeEnt(num)
 	--for i, comp in ipairs(ent[num].component) do comp:die(ent[num]) end
 	if ent[num].col or ent[num].rcol then self.world:remove(ent[num]) end
 	table.remove(ent, num)
-	table.remove(rcol, num)
+	--table.remove(rcol, num)
 end
 
 function game:draw()
