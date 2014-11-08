@@ -37,7 +37,7 @@ function game:init()
 	p = self:addEnt(player,{20,20}) --"p" always refers to the player
 
 	--draw order
-	self.drawOrder = {"background", "platform", "player", "breadman", "projectile"}
+	self.drawOrder = {"background", "platform", "breadman", "player", "projectile"}
 
 	--load level
 	self:loadLevel(1) --in levels.lua
@@ -52,7 +52,8 @@ function game:init()
 
 	--bread slot
 	breadSlots = {}
-	for i=1, 3 do breadSlots[i] = breadSlot:new("none", gameWidth/2 + (i-2)*150-50, 50) end
+	for i=1, 3 do breadSlots[i] = breadSlot:new("none", ((i-1)*131)+235, 50) end
+	self.uiFlash = 0
 
 	--bread spawning
 	breadSpawnTimer = 3
@@ -139,8 +140,13 @@ end
 --eject bread from last slot
 function game:ejectBread()
 	if breadSlots[3].type ~= "none" then
-		self:addEnt(projectile,{p.x, p.y, 40, 40, true, "bread-running", p.moveDir*400+p.vx/2, -10+p.vy/2, 100})
+		if breadSlots[3].health < 33 then
+			self:addEnt(projectile,{p.x, p.y, 40, 40, true, "bread-dead-black", p.moveDir*400+p.vx/2, -10+p.vy/2, 100})
+		else
+			self:addEnt(projectile,{p.x, p.y, 40, 40, false, breadSlots[3].imgName, p.moveDir*40+p.vx/2, -200+p.vy/2, 500})
+		end
 		self:removeBread(3)
+		self.uiFlash = 255
 	end
 end
 
@@ -162,8 +168,11 @@ end
 function game:draw()
 	cam:draw(function(l,t,w,h)
 
-		love.graphics.setColor(100,100,255)
-		love.graphics.rectangle("fill", -20, -20, gameWidth+40, gameHeight+40)
+		--love.graphics.setColor(100,100,255)
+		--love.graphics.rectangle("fill", -20, -20, gameWidth+40, gameHeight+40)
+
+		love.graphics.setColor(255,255,255)
+		love.graphics.draw(img["sky-blue"], -20, -20, 0, 0.5, 0.5)
 
 		for j,layer in ipairs(self.drawOrder) do
 			for i=1, #ent do
@@ -183,7 +192,11 @@ end
 
 function game:keypressed(key)
 	if key == bind["jump"] then p:jump() end
-	if key == bind["down"] and (not p.onGround) then p.pounding = true end
+	if key == bind["down"] and (not p.onGround) then
+		p.pounding = true
+		animation["toaster-groundpound"]:gotoFrame(1)
+		animation["toaster-groundpound"]:resume()
+	end
 	if key == bind["attack"] then self:ejectBread() end
 	if key == "p" then self.showHitboxes = not self.showHitboxes end
 end

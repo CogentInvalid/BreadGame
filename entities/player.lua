@@ -160,7 +160,7 @@ function player:resolveCollision(entity, dir)
 			self:hitSide(entity, dir)
 		end
 		if entity.id == "breadman" and (not entity.dead) then
-			if dir ~= "down" or entity.standingOn ~= 0 then
+			if (dir ~= "down" and dir ~= "in") or entity.standingOn ~= 0 then
 				if self.invuln <= 0 then self:getHit(entity) end
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
@@ -178,7 +178,21 @@ function player:resolveCollision(entity, dir)
 end
 
 function player:draw()
-	love.graphics.setColor(100,100,100)
-	if self.invuln > 0 then love.graphics.setColor(100,100,100,150) end
-	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+
+	love.graphics.setColor(255,255,255)
+	--animation
+	if not self.pounding then
+		if love.keyboard.isDown(bind["left"]) or love.keyboard.isDown(bind["right"]) and (self.onGround) then
+			animation["toaster-running"]:draw(img["toaster-running"], self.x+30, self.y+10, 0, 0.5*self.moveDir, 0.5, 100, 75)
+		else
+			love.graphics.draw(img["toaster-still"], self.x+30, self.y+10, 0, 0.5*self.moveDir, 0.5, 100, 75)
+		end
+	else
+		animation["toaster-groundpound"]:draw(img["toaster-groundpound"], self.x+30, self.y+10, 0, 0.5*self.moveDir, 0.5, 100, 75)
+	end
+
+	if gameMode.showHitboxes then
+		love.graphics.setColor(255,0,0,150)
+		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	end
 end

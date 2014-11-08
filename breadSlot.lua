@@ -6,19 +6,24 @@ function breadSlot:init(type, x, y)
 	self.x = x
 	self.y = y
 
+	self.img = img["bread-dead-white"]
+	self.imgName = "bread-dead-white"
+
 	self.die = false
 end
 
 function breadSlot:update(dt)
-	if self.type ~= "none" then
-
+	if self.type == "breadman" then
+		if self.health > 33 then self.imgName = "bread-dead-tan" end
+		if self.health > 66 then self.imgName = "bread-dead-white" end
+		if self.health < 33 then self.imgName = "bread-dead-black" end
+		self.img = img[self.imgName]
 	end
 end
 
 function breadSlot:draw()
-	love.graphics.setColor(self.health, self.health, self.health*0.8)
-	if self.type == "none" then love.graphics.setColor(50,50,50) end
-	love.graphics.rectangle("fill", self.x, self.y, 100, 100)
+	love.graphics.setColor(255,255,255)
+	if self.type ~= "none" then love.graphics.draw(self.img, self.x, self.y, 0, 0.5, 0.5) end
 end
 
 --add bread to breadslot
@@ -38,6 +43,7 @@ end
 function game:updateBreadSlots(dt)
 	for i=1, 3 do 
 		if breadSlots[i].type ~= "none" then
+			breadSlots[i]:update(dt)
 			breadSlots[i].health = breadSlots[i].health - 10*dt
 			if breadSlots[i].health < 0 then
 				--kill bread

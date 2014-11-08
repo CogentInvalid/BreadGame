@@ -35,6 +35,11 @@ function projectile:update(dt)
 end
 
 function projectile:draw()
-	love.graphics.setColor(255,0,0)
-	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(self.img, self.x-20, self.y-20, 0, 0.5, 0.5)
+
+	if gameMode.showHitboxes then
+		love.graphics.setColor(255,0,0,150)
+		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	end
 end

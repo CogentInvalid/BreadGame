@@ -20,6 +20,10 @@ function loadAssets()
 	animation["bread-running"] = anim8.newAnimation(grid["bread-running"]('1-4','1-4'), 0.04)
 	grid["bread-falling"] = anim8.newGrid(75, 75, 300, 300)
 	animation["bread-falling"] = anim8.newAnimation(grid["bread-falling"]('1-4',1,'1-4',2,'1-4',3,'1-3',4), 0.04)
+	grid["toaster-running"] = anim8.newGrid(200, 150, 400, 600)
+	animation["toaster-running"] = anim8.newAnimation(grid["toaster-running"]('1-2','1-4'), 0.04)
+	grid["toaster-groundpound"] = anim8.newGrid(200, 150, 400, 450)
+	animation["toaster-groundpound"] = anim8.newAnimation(grid["toaster-groundpound"]('1-2','1-3'), 0.04, 'pauseAtEnd')
 
 end
 
