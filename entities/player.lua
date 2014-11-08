@@ -27,6 +27,16 @@ end
 
 function player:update(dt)
 
+	--level bounds
+	if self.x < 0 then
+		self.x = 0
+		self.vx = -self.vx
+	end
+	if self.x+self.w > gameWidth then
+		self.x = gameWidth-self.w
+		self.vx = -self.vx
+	end
+
 	--movement
 	if not love.keyboard.isDown("c") then
 		if love.keyboard.isDown(bind["left"]) and self.vx > -self.maxSpeed then

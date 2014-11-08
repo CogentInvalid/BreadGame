@@ -1,6 +1,6 @@
-local anim8 = require 'anim8'
-require "class"
-require "angle"
+anim8 = require "libs/anim8"
+require "libs/class"
+require "libs/angle"
 require "game"
 
 function love.load()

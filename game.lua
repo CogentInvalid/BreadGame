@@ -1,15 +1,17 @@
-local gamera = require "gamera" --game camera lib
-local bump = require "bump" --rectangle collisions
+local gamera = require "libs/gamera" --game camera lib
+local bump = require "libs/bump" --rectangle collisions
 require "collisions"
-require "player"
-require "platform"
-require "breadman"
+require "entities/player"
+require "entities/platform"
+require "entities/breadman"
 
---every class requires:
+--every entity requires:
 --self.id - identifier (e.g. player, breadman)
 --self.col - true if this collides with anything
 --self.rcol - true if anything collides with this
 --self.die - initialize to false; set to true to delete entity
+--self:update(dt) - update function
+--self:draw() - draw function
 
 --if self.col or self.rcol is true, then you also need:
 --self.x, self.y - position
@@ -56,6 +58,13 @@ function game:init()
 	dt = 0.01
 	accum = 0
 	frame = 0
+
+	--debug
+	img = {}
+	img["gif2"] = love.graphics.newImage("resources/gif2.gif")
+	grid = anim8.newGrid(20, 20, 20, 20, 0, 0, 0)
+	anim = anim8.newAnimation(grid('1-1',1), 0.1)
+
 end
 
 function game:update(delta)
@@ -96,10 +105,8 @@ function game:update(delta)
 			if ent[i].col then genericCollide(ent[i], ent[i].collideOrder) end
 		end
 
-		--cam:setPosition(love.mouse.getX(), love.mouse.getY())
-
-		--camAngle = camAngle + dt
-		cam:setAngle(camAngle)
+		--debug
+		anim:update(dt)
 
 		accum = accum - 0.01
 	end
@@ -137,7 +144,7 @@ end
 
 function game:draw()
 	cam:draw(function(l,t,w,h)
-		love.graphics.setColor(0,20,0)
+		love.graphics.setColor(100,100,255)
 		love.graphics.rectangle("fill", 0, 0, gameWidth, gameHeight)
 		for i=1, #ent do
 			ent[i]:draw()
@@ -146,6 +153,10 @@ function game:draw()
 		for i=1, 3 do
 			breadSlots[i]:draw()
 		end
+
+		love.graphics.setColor(255,255,255)
+		--love.graphics.draw(img["gif2"], 10, 10)
+		anim:draw(img["gif2"], 100, 200)
 	end)
 end
 
