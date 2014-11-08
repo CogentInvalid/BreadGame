@@ -23,6 +23,9 @@ end
 
 function breadSlot:draw()
 	love.graphics.setColor(255,255,255)
+	if self.health < 33 then
+		animation["fire"]:draw(img["fire"], self.x, self.y, 0, 0.5, 0.5, 0, 0)
+	end
 	if self.type ~= "none" then love.graphics.draw(self.img, self.x, self.y, 0, 0.5, 0.5) end
 end
 
@@ -37,6 +40,8 @@ function game:addBread(breadType)
 	end
 	if not added then
 		--bread couldn't fit. incinerate and auto-eject.
+		self:ejectBread()
+		self:addBread(breadType)
 	end
 end
 

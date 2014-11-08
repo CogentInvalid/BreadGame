@@ -5,13 +5,18 @@ function projectile:init(args)
 
 	self.x = args[1]
 	self.y = args[2]
+	self.px = self.x
+	self.py = self.y
 	self.w = args[3]
 	self.h = args[4]
 	self.friendly = args[5]
 	self.img = img[args[6]]
+	self.imgName = args[6]
 	self.vx = args[7]
 	self.vy = args[8]
 	self.gravity = args[9]
+	self.angle = 0
+	self.angleSpeed = args[10]
 
 	self.col = false
 	self.rcol = true
@@ -26,6 +31,8 @@ function projectile:update(dt)
 		self.die = true
 	end
 
+	self.angle = self.angle + self.angleSpeed*dt
+
 	self.px = self.x --magic
 	self.py = self.y
 
@@ -36,6 +43,9 @@ end
 
 function projectile:draw()
 	love.graphics.setColor(255,255,255)
+	if self.imgName == "bread-dead-black" then
+		animation["fire"]:draw(img["fire"], self.x-20, self.y-20, 0, 0.5, 0.5, 0, 0)
+	end
 	love.graphics.draw(self.img, self.x-20, self.y-20, 0, 0.5, 0.5)
 
 	if gameMode.showHitboxes then

@@ -24,6 +24,8 @@ function loadAssets()
 	animation["toaster-running"] = anim8.newAnimation(grid["toaster-running"]('1-2','1-4'), 0.04)
 	grid["toaster-groundpound"] = anim8.newGrid(200, 150, 400, 450)
 	animation["toaster-groundpound"] = anim8.newAnimation(grid["toaster-groundpound"]('1-2','1-3'), 0.04, 'pauseAtEnd')
+	grid["fire"] = anim8.newGrid(150, 150, 600, 750)
+	animation["fire"] = anim8.newAnimation(grid["fire"]('1-4',1,'1-4',2,'1-4',3,'1-4',4,'1-3',5), 0.04)
 
 end
 

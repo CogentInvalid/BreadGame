@@ -13,7 +13,7 @@ function game:loadLevel(num)
 		self:addEnt(background, {gameWidth-150-100,460,0.15,0.15,"pillar"})
 
 		--platforms
-		self:addEnt(platform,{-10, gameHeight-40, gameWidth+20, 40, 1, "ground", 0.8, 0.5, 0, 40})
+		self:addEnt(platform,{-100, gameHeight-40, gameWidth+200, 40, 1, "ground", 0.8, 0.5, 0, 40})
 		self:addEnt(platform,{150, 460, 150, 20, 2, "platform", 0.15, 0.15, 100, 10})
 		self:addEnt(platform,{gameWidth-300, 460, 150, 20, 3, "platform", 0.15, 0.15, 100, 10})
 

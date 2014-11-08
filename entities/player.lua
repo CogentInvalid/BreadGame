@@ -182,7 +182,7 @@ function player:draw()
 	love.graphics.setColor(255,255,255)
 	--animation
 	if not self.pounding then
-		if love.keyboard.isDown(bind["left"]) or love.keyboard.isDown(bind["right"]) and (self.onGround) then
+		if (love.keyboard.isDown(bind["left"]) or love.keyboard.isDown(bind["right"])) and (self.onGround) then
 			animation["toaster-running"]:draw(img["toaster-running"], self.x+30, self.y+10, 0, 0.5*self.moveDir, 0.5, 100, 75)
 		else
 			love.graphics.draw(img["toaster-still"], self.x+30, self.y+10, 0, 0.5*self.moveDir, 0.5, 100, 75)

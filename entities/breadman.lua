@@ -43,16 +43,17 @@ function breadman:update(dt)
 
 	--flip
 	if self.x < 0 then
-		self.x = 0
 		if self.vx < 0 then self.vx = -self.vx/2 end
 		self.moveDir = 1
-		self.flipTimer = math.random()*4+3
 	end
 	if self.x+self.w > gameWidth then
-		self.x = gameWidth - self.w
 		if self.vx > 0 then self.vx = -self.vx/2 end
 		self.moveDir = -1
-		self.flipTimer = math.random()*4+3
+	end
+
+	--level bounds
+	if self.x+self.w+20 < 0 or self.x-20 > gameWidth or self.y-20 > gameHeight then
+		self.die = true
 	end
 
 	--gravity
@@ -68,7 +69,6 @@ function breadman:update(dt)
 	if self.onGround then
 		self.hasParachute = false
 	else
-		self.flipTimer = math.random()*4+3
 		self.standingOn = 0
 	end
 
