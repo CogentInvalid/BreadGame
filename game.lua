@@ -36,6 +36,9 @@ function game:init()
 	ent = {}
 	p = self:addEnt(player,{20,20}) --"p" always refers to the player
 
+	--draw order
+	self.drawOrder = {"background", "platform", "player", "breadman", "projectile"}
+
 	--load level
 	self:loadLevel(1) --in levels.lua
 
@@ -136,7 +139,7 @@ end
 --eject bread from last slot
 function game:ejectBread()
 	if breadSlots[3].type ~= "none" then
-		self:addEnt(projectile,{p.x, p.y, 20, 20, true, "bread-running", p.moveDir*200+p.vx/2, -80+p.vy/2, 100})
+		self:addEnt(projectile,{p.x, p.y, 40, 40, true, "bread-running", p.moveDir*400+p.vx/2, -10+p.vy/2, 100})
 		self:removeBread(3)
 	end
 end
@@ -158,10 +161,14 @@ end
 
 function game:draw()
 	cam:draw(function(l,t,w,h)
+
 		love.graphics.setColor(100,100,255)
-		love.graphics.rectangle("fill", -10, -10, gameWidth+20, gameHeight+20)
-		for i=1, #ent do
-			ent[i]:draw()
+		love.graphics.rectangle("fill", -20, -20, gameWidth+40, gameHeight+40)
+
+		for j,layer in ipairs(self.drawOrder) do
+			for i=1, #ent do
+				if ent[i].id == layer then ent[i]:draw() end
+			end
 		end
 
 		--ui

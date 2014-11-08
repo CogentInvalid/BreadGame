@@ -11,7 +11,7 @@ function player:init(args)
 	self.w = 60; self.h = 40 --width/height
 
 	self.moveDir = 1
-	self.maxSpeed = 200 --horizontal movement speed
+	self.maxSpeed = 180 --horizontal movement speed
 	self.airControl = false --can player use variable jump height?
 	self.onGround = false
 	self.standingOn = 0
@@ -114,6 +114,8 @@ function player:update(dt)
 		self.onGround = false
 	end
 
+	if self.hp < 0 then self.hp = 0; self.die = true end
+
 end
 
 function player:jump()
@@ -157,7 +159,7 @@ function player:resolveCollision(entity, dir)
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
 		end
-		if entity.id == "breadman" then
+		if entity.id == "breadman" and (not entity.dead) then
 			if dir ~= "down" or entity.standingOn ~= 0 then
 				if self.invuln <= 0 then self:getHit(entity) end
 			else

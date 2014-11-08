@@ -18,6 +18,8 @@ function loadAssets()
 	--150 by 150
 	grid["bread-running"] = anim8.newGrid(150, 150, 600, 600)
 	animation["bread-running"] = anim8.newAnimation(grid["bread-running"]('1-4','1-4'), 0.04)
+	grid["bread-falling"] = anim8.newGrid(75, 75, 300, 300)
+	animation["bread-falling"] = anim8.newAnimation(grid["bread-falling"]('1-4',1,'1-4',2,'1-4',3,'1-3',4), 0.04)
 
 end
 

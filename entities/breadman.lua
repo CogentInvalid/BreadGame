@@ -15,6 +15,8 @@ function breadman:init(args)
 	self.onGround = false
 	self.standingOn = 0
 
+	self.angle = 0
+
 	self.hasParachute = args[3]
 
 	--does it collide with things
@@ -70,6 +72,11 @@ function breadman:update(dt)
 		self.standingOn = 0
 	end
 
+	--spinning
+	if self.dead then
+		self.angle = self.angle + 2*dt
+	end
+
 	self.onGround = false
 
 	self.px = self.x --magic
@@ -81,15 +88,15 @@ function breadman:update(dt)
 
 end
 
-function breadman:land(ent) --ehhhh
+function breadman:land(ent)
 	self.onGround = true
-	self.standingOn = ent.num
+	self.standingOn = ent.num --id of current platform
 end
 
 function breadman:hitSide(ent, dir)
 	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
-	if dir == "up" then self.y = ent.y-self.h; self.vy = 0; self:land(ent) end
+	if dir == "up" and (not self.dead) then self.y = ent.y-self.h; self.vy = 0; self:land(ent) end
 	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
@@ -101,6 +108,7 @@ function breadman:resolveCollision(entity, dir)
 		if entity.id == "projectile" then
 			if entity.friendly then
 				self.dead = true
+				self.vy = -200
 			end
 		end
 	end
@@ -108,7 +116,11 @@ end
 
 function breadman:draw()
 	love.graphics.setColor(255,255,255)
-	animation["bread-running"]:draw(img["bread-running"], self.x+20, self.y+10, 0 ,0.5*self.moveDir, 0.5, 75, 75)
+	if self.standingOn ~= 0 then
+		animation["bread-running"]:draw(img["bread-running"], self.x+20, self.y+10, self.angle, 0.5*self.moveDir, 0.5, 75, 75)
+	else
+		animation["bread-falling"]:draw(img["bread-falling"], self.x+20, self.y+10, self.angle, self.moveDir, 1, 75/2, 75/2)
+	end
 	if self.hasParachute then love.graphics.draw(img["parachute_bad"], self.x-30, self.y-50, 0, 0.5, 0.5) end
 	if gameMode.showHitboxes then
 		love.graphics.setColor(255,0,0,150)
