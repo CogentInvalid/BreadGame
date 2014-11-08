@@ -60,7 +60,6 @@ function game:init()
 	frame = 0
 
 	--debug
-	img = {}
 	img["gif2"] = love.graphics.newImage("resources/gif2.gif")
 	grid = anim8.newGrid(20, 20, 20, 20, 0, 0, 0)
 	anim = anim8.newAnimation(grid('1-1',1), 0.1)
@@ -89,7 +88,9 @@ function game:update(delta)
 		--enemy spawning
 		breadSpawnTimer = breadSpawnTimer - dt
 		if breadSpawnTimer < 0 then
-			--spawn breadman
+			self:addEnt(breadman,{20, gameHeight - 80})
+			breadSpawnTimer = 3
+
 		end
 
 		--iterate over every entity "entity" in the game
@@ -121,7 +122,9 @@ function game:pound(x, y)
 				entity.y = entity.y - 5
 				local distance = math.abs(entity.x+entity.w/2-x)
 				local magnitude = math.pow(2, -0.005*distance)
-				entity.vy = -600*magnitude
+				entity.vy = -450*magnitude
+				entity.vx = entity.vx*magnitude*2
+				entity.moveDir = getSign(entity.vx)
 			end
 		end
 	end
@@ -154,6 +157,7 @@ function game:draw()
 			breadSlots[i]:draw()
 		end
 
+		--testing stuff
 		love.graphics.setColor(255,255,255)
 		--love.graphics.draw(img["gif2"], 10, 10)
 		anim:draw(img["gif2"], 100, 200)

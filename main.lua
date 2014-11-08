@@ -1,13 +1,20 @@
 anim8 = require "libs/anim8"
 require "libs/class"
 require "libs/angle"
+require "assets"
 require "game"
 
 function love.load()
 
+	--game dimensions
 	gameWidth = 800
 	gameHeight = 600
+	love.window.setMode(gameWidth, gameHeight)
 
+	loadAssets()
+
+	--love's update, draw, and keyPressed methods reroute to the current mode's.
+	--that way we can create a "menuMode" class later with totally different drawing & controls.
 	gameMode = game:new()
 	mode = gameMode
 
