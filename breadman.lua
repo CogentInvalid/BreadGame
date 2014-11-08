@@ -10,7 +10,8 @@ function breadman:init(args)
 	self.vx = 0; self.vy = -300 --velocity
 	self.w = 40; self.h = 40 --width/height
 
-	self.moveDir = randSign();
+	self.moveDir = randSign()
+	self.flipTimer = 5
 	self.onGround = false
 
 	--does it collide with things
@@ -25,17 +26,26 @@ end
 
 function breadman:update(dt)
 
-	--ai
-	self.vx = self.vx - (self.vx - 100*self.moveDir)*dt
+	--"ai"
+	if self.onGround then self.vx = self.vx - (self.vx - 100*self.moveDir)*3*dt end
+	--if self.onGround then self.flipTimer = self.flipTimer - dt end
+	if self.flipTimer < 0 then
+		self.moveDir = -self.moveDir
+		self.flipTimer = math.random()*4+3
+	end
 
 	--flip
 	if self.x < 0 then
 		self.x = 0
-		self.vx = -self.vx
+		if self.vx < 0 then self.vx = -self.vx/2 end
+		self.moveDir = 1
+		self.flipTimer = math.random()*4+3
 	end
 	if self.x+self.w > gameWidth then
 		self.x = gameWidth - self.w
-		self.vx = -self.vx
+		if self.vx > 0 then self.vx = -self.vx/2 end
+		self.moveDir = -1
+		self.flipTimer = math.random()*4+3
 	end
 
 	--gravity
@@ -48,12 +58,12 @@ function breadman:update(dt)
 
 	--friction
 	if self.onGround then
-		--if self.vx > 0 then self.vx = self.vx - (600*dt)
-		--else if self.vx < 0 then self.vx = self.vx + (600*dt) end end
-		--if self.vx > -6 and self.vx < 6 then self.vx = 0 end
+		--nothing
+	else
+		self.flipTimer = math.random()*4+3
 	end
 
-	--self.onGround = false
+	self.onGround = false
 
 	self.px = self.x --magic
 	self.py = self.y
@@ -64,10 +74,14 @@ function breadman:update(dt)
 
 end
 
+function breadman:land() --ehhhh
+	self.onGround = true
+end
+
 function breadman:hitSide(ent, dir)
 	if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
-	if dir == "up" then self.y = ent.y-self.h; self.vy = 0; self.onGround = true end
+	if dir == "up" then self.y = ent.y-self.h; self.vy = 0; self:land() end
 	if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 

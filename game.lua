@@ -5,7 +5,22 @@ require "player"
 require "platform"
 require "breadman"
 
+--every class requires:
+--self.id - identifier (e.g. player, breadman)
+--self.col - true if this collides with anything
+--self.rcol - true if anything collides with this
+--self.die - initialize to false; set to true to delete entity
+
+--if self.col or self.rcol is true, then you also need:
+--self.x, self.y - position
+--self.py, self.py - your position last frame
+--self.w, self.h - width and height
+--self.collideOrder - just make it {isReal}
+--self:resolveCollision(entity, dir) - a function used to deal with collisions
+
 game = class:new()
+
+require "breadSlot"
 
 function game:init()
 
@@ -18,6 +33,7 @@ function game:init()
 	p = ent[1]
 	self:addEnt(platform,{0, gameHeight-20, gameWidth, 40})
 	self:addEnt(breadman,{20, gameHeight - 80})
+	self:addEnt(breadman,{100, gameHeight - 80})
 
 	--camera
 	cam = gamera.new(-10000,-10000,gameWidth+20000,gameHeight+20000)
@@ -26,6 +42,13 @@ function game:init()
 	camx = round(cam.x,2); camy = round(cam.y,2)
 	camAngle = 0
 	screenShake = 0
+
+	--bread slot
+	breadSlots = {}
+	for i=1, 3 do breadSlots[i] = breadSlot:new("none", gameWidth/2 + (i-2)*200-50, 50) end
+
+	--bread spawning
+	breadSpawnTimer = 3
 
 	self.showHitboxes = false
 
@@ -50,6 +73,15 @@ function game:update(delta)
 		camx = camx - (camx - gameWidth/2)*3*dt
 		camy = camy - (camy - gameHeight/2)*3*dt
 		cam:setPosition(camx, camy)
+
+		--bread slots
+		self:updateBreadSlots(dt) --in breadSlot.lua
+
+		--enemy spawning
+		breadSpawnTimer = breadSpawnTimer - dt
+		if breadSpawnTimer < 0 then
+			--spawn breadman
+		end
 
 		--iterate over every entity "entity" in the game
 		for i, entity in ipairs(ent) do
@@ -109,6 +141,10 @@ function game:draw()
 		love.graphics.rectangle("fill", 0, 0, gameWidth, gameHeight)
 		for i=1, #ent do
 			ent[i]:draw()
+		end
+
+		for i=1, 3 do
+			breadSlots[i]:draw()
 		end
 	end)
 end

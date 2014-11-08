@@ -9,8 +9,11 @@ function player:init(args)
 	self.px = self.x; self.py = self.y --player's position last frame
 	self.vx = 0; self.vy = 0 --velocity
 	self.w = 60; self.h = 40 --width/height
+
 	self.maxSpeed = 200 --horizontal movement speed
 	self.airControl = false --can player use variable jump height?
+
+	self.hp = 100
 
 	--does it collide with things
 	self.col = true
@@ -123,6 +126,7 @@ function player:resolveCollision(entity, dir)
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
 					entity.die = true
+					gameMode:addBread(entity.id)
 				else
 					entity.vx = ((entity.x+entity.w/2)-(self.x+self.w/2))*5
 					entity.moveDir = getSign(entity.vx)

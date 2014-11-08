@@ -1,3 +1,4 @@
+local anim8 = require 'anim8'
 require "class"
 require "angle"
 require "game"
