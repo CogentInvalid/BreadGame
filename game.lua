@@ -8,6 +8,8 @@ require "entities/breadman"
 require "entities/poptart"
 require "entities/bagel"
 require "entities/loaf"
+require "entities/cupcake"
+require "entities/frosting"
 require "entities/background"
 require "entities/projectile"
 
