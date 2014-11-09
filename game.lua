@@ -236,6 +236,12 @@ function game:loseGame()
 	menuMode.mode = "dead"
 end
 
+function game:winGame()
+	self:load()
+	mode = menuMode
+	menuMode.mode = "win"
+end
+
 function game:addEnt(type, args)
 	local entity = type:new(args)
 	ent[#ent+1] = entity
