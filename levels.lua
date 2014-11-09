@@ -120,17 +120,17 @@ function game:loadLevel(num)
 
 		--backgrounds
 		--{x, y, scalex, scaley, img}
-		self:addEnt(background, {400,370,0.15,0.15,"mountains2"})
+		self:addEnt(background, {500,370,0.15,0.15,"mountains2"})
 		self:addEnt(background, {0,340,0.15,0.15,"tree1"})
 		self:addEnt(background, {50,50,0.15,0.15,"cloud1"})
 		self:addEnt(background, {600,150,0.15,0.15,"cloud2"})
-		self:addEnt(background, {gameWidth-100,460,0.15,0.15,"pillar"})
+		self:addEnt(background, {gameWidth-150,460,0.15,0.15,"pillar"})
 
 		--platforms
 		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
-		self:addEnt(platform,{-100, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 890, 40})
+		self:addEnt(platform,{0, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 890, 40})
 		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 0, 40})
-		self:addEnt(platform,{gameWidth-150, 460, 150, 20, 3, "platform", 0.15, 0.15, 100, 10})
+		self:addEnt(platform,{gameWidth-250, 460, 300, 20, 3, "platform", 0.25, 0.15, 100, 10})
 
 		--enemies
 		--{x, y, hasParachute}
@@ -139,7 +139,7 @@ function game:loadLevel(num)
 		self:addEnt(breadman,{500, gameHeight - 180, false})
 		self:addEnt(breadman,{200, gameHeight - 180, false})
 		numEnemies = 2
-		numSpecial = 1
+		numSpecial = 0
 
 		spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
 
