@@ -34,12 +34,7 @@ require "ash"
 
 function game:init()
 
-	--game world (for collisions)
-	self.world = bump.newWorld()
-
-	--entities
-	ent = {}
-	p = self:addEnt(player,{20,500}) --"p" always refers to the player
+	self:load()
 
 	--draw order
 	self.drawOrder = {"background", "platform", "breadman", "player", "projectile"}
@@ -51,6 +46,22 @@ function game:init()
 	camx = round(cam.x,2); camy = round(cam.y,2)
 	camAngle = 0
 	screenShake = 0
+
+
+	--timestep stuff
+	dt = 0.01
+	accum = 0
+	frame = 0
+
+end
+
+function game:load()
+	--game world (for collisions)
+	self.world = bump.newWorld()
+
+	--entities
+	ent = {}
+	p = self:addEnt(player,{20,500}) --"p" always refers to the player
 
 	--bread slot
 	self.ash = {}
@@ -70,11 +81,7 @@ function game:init()
 
 	self.showHitboxes = false
 
-	--timestep stuff
-	dt = 0.01
-	accum = 0
-	frame = 0
-
+	self.endGame = false
 end
 
 function game:update(delta)
@@ -134,6 +141,8 @@ function game:update(delta)
 		for i, anim in pairs(animation) do
 			anim:update(dt)
 		end
+
+		if self.endGame then self:loseGame() end
 
 		accum = accum - 0.01
 	end
@@ -217,6 +226,12 @@ function game:spawnEnemy(selection)
 		numEnemies = numEnemies - 1
 	end
 	numEnemies = numEnemies + 1
+end
+
+function game:loseGame()
+	self:load()
+	mode = menuMode
+	menuMode.mode = "dead"
 end
 
 function game:addEnt(type, args)

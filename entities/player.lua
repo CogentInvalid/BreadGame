@@ -34,6 +34,7 @@ function player:init(args)
 	--delete this next frame?
 	self.die = false
 	self.dead = false
+	self.deadTimer = 1
 end
 
 function player:update(dt)
@@ -133,16 +134,21 @@ function player:update(dt)
 	self.x = self.x + self.vx*dt
 	self.y = self.y + self.vy*dt
 
-	--determining collisions
-	if self.y+self.h > gameHeight then --overhaul this when we've got platforms
-		self.onGround = true
-		self.y = gameHeight - self.h
-		self.airControl = true
-	else
-		self.onGround = false
+	if self.y > gameHeight then
+		self.dead = true
 	end
 
-	if self.hp < 0 then self.hp = 0; self.dead = true end
+	--determining collisions
+	self.onGround = false
+
+	if self.hp <= 0 then self.hp = 0; self.dead = true end
+
+	if self.dead then
+		self.deadTimer = self.deadTimer - dt
+		if self.deadTimer < 0 then
+			gameMode.endGame = true
+		end
+	end
 
 end
 
@@ -168,7 +174,7 @@ function player:getHit(ent)
 	local ang = angle:new({dx, dy})
 	p.vx = ang.xPart * 400
 	p.vy = ang.yPart * 400 - 100
-	self.hp = self.hp - 10
+	self.hp = self.hp - 15
 	self.invuln = 2
 	playSound("Hit")
 end
