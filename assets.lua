@@ -11,6 +11,21 @@ function loadAssets()
 		end
 	end
 
+	local imgFiles = love.filesystem.getDirectoryItems("resources/sound")
+	sound = {} --load images from img folder
+	for i,name in ipairs(imgFiles) do
+		if string.find(name, ".ogg") then
+			name = string.gsub(name, ".ogg", "")
+			sound[name] = love.audio.newSource("resources/sound/" .. name .. ".ogg")
+		end
+	end
+
+	sound["BreadTheme1"]:setLooping(true)
+	sound["BreadTheme1"]:setVolume(0.6)
+	sound["BreadTheme2"]:setLooping(true)
+	sound["BreadTheme2"]:setVolume(0.6)
+
+	--animations
 	grid = {}
 	animation = {}
 

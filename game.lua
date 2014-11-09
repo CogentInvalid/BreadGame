@@ -1,6 +1,7 @@
 local gamera = require "libs/gamera" --game camera lib
 local bump = require "libs/bump" --rectangle collisions
 require "collisions"
+require "sound"
 require "entities/player"
 require "entities/platform"
 require "entities/breadman"
@@ -76,6 +77,11 @@ function game:init()
 end
 
 function game:update(delta)
+
+	--music
+	if not sound["BreadTheme1"]:isPlaying() then
+		love.audio.play(sound["BreadTheme1"])
+	end
 
 	accum = accum + delta
 	if accum > 0.05 then accum = 0.05 end
@@ -158,6 +164,7 @@ function game:ejectBread()
 		end
 		self:removeBread(3)
 		self.uiFlash = 255
+		playSound("BreadEject")
 	end
 end
 
@@ -184,11 +191,11 @@ function game:spawnEnemy(selection)
 	end
 	if selection == "bagel" then
 		if math.random(2) == 1 then
-			local e = self:addEnt(bagel,{-50, gameHeight - 50, 1})
-			e.vx = 50; e.vy = -300
+			local e = self:addEnt(bagel,{-50, gameHeight - 80, 1})
+			e.vx = 50
 		else
-			local e = self:addEnt(bagel,{gameWidth+10, gameHeight - 50, -1})
-			e.vx = -50; e.vy = -300
+			local e = self:addEnt(bagel,{gameWidth+10, gameHeight - 80, -1})
+			e.vx = -50
 		end
 	end
 	numEnemies = numEnemies + 1
@@ -243,4 +250,5 @@ function game:keypressed(key)
 	end
 	if key == bind["attack"] then self:ejectBread() end
 	if key == "p" then self.showHitboxes = not self.showHitboxes end
+	if key == "d" then playSound("BreadEject") end
 end

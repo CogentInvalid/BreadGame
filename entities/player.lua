@@ -145,6 +145,7 @@ end
 function player:jump()
 	if self.onGround then
 		self.vy = -400
+		playSound("Jump")
 	end
 end
 
@@ -153,6 +154,7 @@ function player:pound(ent)
 		self.pounding = false
 		screenShake = 10*(self.vy/1000)
 		gameMode:pound(self.x+self.w/2, self.y+self.h, ent.num)
+		playSound("Pound")
 	end
 end
 
@@ -164,6 +166,7 @@ function player:getHit(ent)
 	p.vy = ang.yPart * 400 - 100
 	self.hp = self.hp - 10
 	self.invuln = 2
+	playSound("Hit")
 end
 
 function player:gainHP(amt)
@@ -174,7 +177,12 @@ end
 function player:hitSide(ent, dir)
 	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
-	if dir == "up" then self.y = ent.y-self.h; self:pound(ent); self.vy = 0; self.onGround = true end
+	if dir == "up" then
+		self.y = ent.y-self.h
+		if self.vy > 10 then playSound("Land") end
+		self:pound(ent); self.vy = 0
+		self.onGround = true
+	end
 	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 

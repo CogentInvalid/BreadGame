@@ -1,11 +1,21 @@
 menu = class:new()
 
 function menu:init()
-
+	self.enterTimer = 1
+	self.entering = false
 end
 
 function menu:update(dt)
-
+	if self.entering then
+		self.enterTimer = self.enterTimer - dt
+		if self.enterTimer < 0 then
+			mode = gameMode
+		end
+	else
+		if not sound["BreadTheme2"]:isPlaying() then
+			love.audio.play(sound["BreadTheme2"])
+		end
+	end
 end
 
 function menu:draw()
@@ -18,5 +28,9 @@ function menu:draw()
 end
 
 function menu:keypressed(key)
-	if key == "return" then mode = gameMode end
+	if key == "return" then
+		self.entering = true
+		sound["BreadTheme2"]:stop()
+		playSound("Enter")
+	end
 end

@@ -70,6 +70,7 @@ function game:addBread(breadType)
 			if breadType == "poptart" then
 				p.supercharged = true
 			end
+			playSound("BreadReceive")
 		end
 	end
 	if not added then
@@ -83,7 +84,9 @@ function game:updateBreadSlots(dt)
 	for i=1, 3 do 
 		if breadSlots[i].type ~= "none" then
 			breadSlots[i]:update(dt)
+			local ph = breadSlots[i].health
 			breadSlots[i].health = breadSlots[i].health - 10*dt
+			if ph > 33 and breadSlots[i].health < 33 then playSound("Burning") end
 			if breadSlots[i].health < 0 then
 				--kill bread
 				--p:gainHP(5)
