@@ -52,7 +52,7 @@ function bagel:update(dt)
 
 	--level bounds
 	if self.x+self.w+20 < 0 or self.x-20 > gameWidth or self.y-20 > gameHeight then
-		self:die()
+		self:kill()
 	end
 
 	--gravity

@@ -28,4 +28,9 @@ function game:drawUI()
 		love.graphics.draw(img["arrow"], gameWidth-100, gameHeight/2-20, 0, 0.15, 0.15)
 	end
 
+	for i=1, #self.ash do
+		love.graphics.setColor(255,255,255)
+		self.ash[i]:draw()
+	end
+
 end

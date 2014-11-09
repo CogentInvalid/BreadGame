@@ -17,6 +17,7 @@ function game:loadLevel(num)
 		--enemies
 		self:addEnt(breadman,{500, gameHeight - 80, false})
 		self:addEnt(breadman,{200, gameHeight - 80, false})
+		numEnemies = 2
 		numSpecial = 0
 
 	end
@@ -45,7 +46,6 @@ function game:loadLevel(num)
 		numEnemies = 2
 		numSpecial = 0
 
-		--goes in reverse order because i'm lazy
 		spawnQueue = {"top", "side"}
 
 	end
@@ -75,7 +75,6 @@ function game:loadLevel(num)
 		numEnemies = 2
 		numSpecial = 0
 
-		--goes in reverse order because i'm lazy
 		spawnQueue = {"top", "top", "side", "top", "side"}
 
 	end
@@ -104,12 +103,11 @@ function game:loadLevel(num)
 
 		--enemies
 		--{x, y, hasParachute}
-		self:addEnt(breadman,{gamewidth-100, gameHeight - 40, false})
+		self:addEnt(breadman,{gameWidth-400, gameHeight - 220, false})
 		numEnemies = 1
 		numSpecial = 0
 
-		--goes in reverse order because i'm lazy
-		spawnQueue = {"BAGEL"}
+		spawnQueue = {"bagel","side","side","side","side"}
 
 	end
 
@@ -132,13 +130,13 @@ function game:loadLevel(num)
 
 		--enemies
 		--{x, y, hasParachute}
-		self:addEnt(loaf,{gamewidth-159, 459, false})
-		self:addEnt(breadman,{200, gameHeight - 180, false})
+		--TODO: ADD LOAF
+		--self:addEnt(loaf,{gameWidth-159, 459, false})
+		self:addEnt(breadman,{500, gameHeight - 180, false})
 		self:addEnt(breadman,{200, gameHeight - 180, false})
 		numEnemies = 2
 		numSpecial = 1
 
-		--goes in reverse order because i'm lazy
 		spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
 
 	end

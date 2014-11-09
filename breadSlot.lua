@@ -56,11 +56,18 @@ function game:updateBreadSlots(dt)
 			breadSlots[i].health = breadSlots[i].health - 10*dt
 			if breadSlots[i].health < 0 then
 				--kill bread
-				p:gainHP(5)
+				--p:gainHP(5)
 				gameMode:removeBread(i)
+				for i=1, 20 do
+					self.ash[#self.ash+1] = ash:new()
+				end
 			end
 		end
 		--breadSlots[i]:update(dt)
+		for i,ashe in ipairs(self.ash) do
+			ashe:update(dt)
+			if ashe.die then table.remove(self.ash, i); p:gainHP(5*(1/20)) end
+		end
 	end
 end
 

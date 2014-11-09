@@ -28,6 +28,7 @@ game = class:new()
 
 require "breadSlot"
 require "ui"
+require "ash"
 
 function game:init()
 
@@ -43,13 +44,14 @@ function game:init()
 
 	--camera
 	cam = gamera.new(-10000,-10000,gameWidth+20000,gameHeight+20000)
-	--cam:setScale(0.6)
+	--cam:setScale(0.7)
 	cam:setPosition(gameWidth/2, gameHeight/2)
 	camx = round(cam.x,2); camy = round(cam.y,2)
 	camAngle = 0
 	screenShake = 0
 
 	--bread slot
+	self.ash = {}
 	breadSlots = {}
 	for i=1, 3 do breadSlots[i] = breadSlot:new("none", ((i-1)*131)+235, 50) end
 	self.uiFlash = 0
@@ -61,7 +63,7 @@ function game:init()
 	breadSpawnTimer = 3
 
 	--load level
-	currentLevel = 1
+	currentLevel = 4
 	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false
