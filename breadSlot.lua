@@ -37,6 +37,9 @@ function game:addBread(breadType)
 		if breadSlots[4-i].type == "none" and (not added) then
 			breadSlots[4-i].type = breadType
 			added = true
+			if breadType == "poptart" then
+				p.supercharged = true
+			end
 		end
 	end
 	if not added then
@@ -62,6 +65,9 @@ function game:updateBreadSlots(dt)
 end
 
 function game:removeBread(num)
+	if breadSlots[num].type == "poptart" then
+		p.supercharged = false
+	end
 	for i=1, num-1 do
 		breadSlots[num-i+1].type = breadSlots[num-i].type
 		breadSlots[num-i+1].health = breadSlots[num-i].health
