@@ -180,7 +180,7 @@ function game:spawnEnemy(selection)
 			e.vx = -50; e.vy = -300
 		end
 	end
-	if selection = "bagel" then
+	if selection == "bagel" then
 		if math.random(2) == 1 then
 			local e = self:addEnt(bagel,{-50, gameHeight - 50, 1})
 			e.vx = 50; e.vy = -300
