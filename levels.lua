@@ -17,6 +17,8 @@ function game:loadLevel(num)
 		--enemies
 		self:addEnt(breadman,{500, gameHeight - 80, false})
 		self:addEnt(breadman,{200, gameHeight - 80, false})
+		self:addEnt(bagel,{0, gameHeight - 80, 1})
+		numEnemies = 3
 		numSpecial = 0
 
 	end
@@ -109,7 +111,7 @@ function game:loadLevel(num)
 		numSpecial = 0
 
 		--goes in reverse order because i'm lazy
-		spawnQueue = {"BAGEL"}
+		spawnQueue = {"bagel"}
 
 	end
 
