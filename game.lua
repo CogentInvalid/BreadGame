@@ -36,7 +36,7 @@ function game:init()
 
 	--entities
 	ent = {}
-	p = self:addEnt(player,{20,20}) --"p" always refers to the player
+	p = self:addEnt(player,{20,500}) --"p" always refers to the player
 
 	--draw order
 	self.drawOrder = {"background", "platform", "breadman", "player", "projectile"}
@@ -177,6 +177,15 @@ function game:spawnEnemy(selection)
 			e.vx = 50; e.vy = -300
 		else
 			local e = self:addEnt(breadman,{gameWidth+10, gameHeight - 50, false})
+			e.vx = -50; e.vy = -300
+		end
+	end
+	if selection = "bagel" then
+		if math.random(2) == 1 then
+			local e = self:addEnt(bagel,{-50, gameHeight - 50, 1})
+			e.vx = 50; e.vy = -300
+		else
+			local e = self:addEnt(bagel,{gameWidth+10, gameHeight - 50, -1})
 			e.vx = -50; e.vy = -300
 		end
 	end

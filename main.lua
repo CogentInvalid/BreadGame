@@ -4,6 +4,7 @@ require "libs/angle"
 require "assets"
 require "levels"
 require "game"
+require "menu"
 
 function love.load()
 
@@ -17,7 +18,8 @@ function love.load()
 	--love's update, draw, and keyPressed methods reroute to the current mode's.
 	--that way we can create a "menuMode" class later with totally different drawing & controls.
 	gameMode = game:new()
-	mode = gameMode
+	menuMode = menu:new()
+	mode = menuMode
 
 	--controls
 	bind = {}
