@@ -17,8 +17,7 @@ function game:loadLevel(num)
 		--enemies
 		self:addEnt(breadman,{500, gameHeight - 80, false})
 		self:addEnt(breadman,{200, gameHeight - 80, false})
-		numEnemies = 2
-		self:addEnt(poptart,{gameWidth/2-250, gameHeight - 200, 1})
+		self:addEnt(cupcake,{gameWidth/2, -20, -1})
 		numEnemies = 3
 		numSpecial = 0
 
@@ -127,7 +126,7 @@ function game:loadLevel(num)
 
 		--platforms
 		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
-		self:addEnt(platform,{0, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 890, 40})
+		self:addEnt(platform,{-50, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 890, 40})
 		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 0, 40})
 		self:addEnt(platform,{gameWidth-250, 400, 300, 20, 3, "platform", 0.25, 0.15, 100, 10})
 

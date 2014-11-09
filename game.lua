@@ -8,8 +8,10 @@ require "entities/breadman"
 require "entities/poptart"
 require "entities/bagel"
 require "entities/loaf"
+require "entities/cupcake"
 require "entities/background"
 require "entities/projectile"
+require "entities/frosting"
 
 --every entity requires:
 --self.id - identifier (e.g. player, breadman)
@@ -65,7 +67,7 @@ function game:init()
 	breadSpawnTimer = 3
 
 	--load level
-	currentLevel = 5
+	currentLevel = 1
 	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false

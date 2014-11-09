@@ -1,20 +1,21 @@
-loaf = class:new()
+cupcake = class:new()
 
-function loaf:init(args)
+function cupcake:init(args)
 
-	self.id = "loaf"; self.drawLayer = "breadman"
+	self.id = "cupcake"; self.drawLayer = "breadman"
 
 	self.x = args[1]
 	self.y = args[2]
 	self.px = self.x; self.py = self.y --position last frame
 	self.vx = 0; self.vy = 0 --velocity
-	self.w = 100; self.h = 40 --width/height
+	self.w = 40; self.h = 40 --width/height
 
-	self.moveDir = args[3]
+	self.dir = args[3]
 	self.onGround = false
 	self.standingOn = 0
 
-	self.hp = 6
+	self.angle = 0
+	self.throwTimer = 1
 
 	--does it collide with things
 	self.col = true
@@ -28,28 +29,33 @@ function loaf:init(args)
 	self.die = false
 end
 
-function loaf:update(dt)
+function cupcake:update(dt)
 
 	--"ai"
 	if self.onGround then
 		if self.x+self.w/2 < p.x+p.w/2 then
-			self.moveDir = 1
+			self.dir = 1
 		else
-			self.moveDir = -1
+			self.dir = -1
 		end
-		self.vx = self.vx + 20*self.moveDir*dt
+
+		local pt = self.throwTimer
+		self.throwTimer = self.throwTimer - dt
+		if pt > 0.8 and self.throwTimer <= 0.8 then
+			--throw cupcake
+			gameMode:addEnt(frosting, {self.x+self.w/2-10, self.y+self.w/2-10, self.dir*100, -200})
+		end
+		if self.throwTimer < 0 then
+			self.throwTimer = 1.4
+		end
 	end
-	if self.vx > 5 then self.vx = 5 end
-	if self.vx < -5 then self.vx = -5 end
 
 	--flip
 	if self.x < 0 then
 		if self.vx < 0 then self.vx = -self.vx/2 end
-		self.moveDir = 1
 	end
 	if self.x+self.w > gameWidth then
 		if self.vx > 0 then self.vx = -self.vx/2 end
-		self.moveDir = -1
 	end
 
 	--level bounds
@@ -57,22 +63,7 @@ function loaf:update(dt)
 		self:kill()
 	end
 
-	--check bottom
-	local x = self.x+self.w/2+50*self.moveDir
-	local y = self.y+self.h+2
-	local found = false
-	for i=1, #ent do
-		if ent[i].id == "platform" then
-			if x > ent[i].x and x < ent[i].x+ent[i].w and y > ent[i].y and y < ent[i].y+ent[i].h then
-				found = true
-			end
-		end
-	end
-	if not found then
-		self.vx = 0
-	end
 
-	if self.vy < -100 then self.vy = -100 end
 	--gravity
 	local maxFall = 600
 	if self.vy < maxFall then
@@ -83,8 +74,14 @@ function loaf:update(dt)
 
 	--friction
 	if self.onGround then
+		self.vx = self.vx - (self.vx)*5*dt
 	else
 		self.standingOn = 0
+	end
+
+	--rotate
+	if self.dead then
+		self.angle = self.angle + 2*dt
 	end
 
 	self.onGround = false
@@ -96,37 +93,37 @@ function loaf:update(dt)
 	self.x = self.x + self.vx*dt
 	self.y = self.y + self.vy*dt
 
-	if self.hp <= 0 then self:kill() end
-
 end
 
-function loaf:land(ent)
+function cupcake:land(ent)
 	self.onGround = true
 	self.standingOn = ent.num --id of current platform
+	if self.vy > 10 then
+		animation["cupcake-throwing"]:gotoFrame(1)
+		self.throwTimer = 1.4
+	end
 end
 
-function loaf:kill()
+function cupcake:kill()
 	self.die = true
 	numEnemies = numEnemies - 1
-	numSpecial = numSpecial - 1
 end
 
-function loaf:hitSide(ent, dir)
+function cupcake:hitSide(ent, dir)
 	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
-	if dir == "up" and (not self.dead) then self.y = ent.y-self.h; self.vy = 0; self:land(ent) end
+	if dir == "up" and (not self.dead) then self.y = ent.y-self.h; self:land(ent); self.vy = 0 end
 	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
-function loaf:resolveCollision(entity, dir)
+function cupcake:resolveCollision(entity, dir)
 	if not love.keyboard.isDown("c") then
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
 		end
 		if entity.id == "projectile" then
 			if entity.friendly and self.dead == false then
-				self.hp = self.hp - 1
-				entity.die = true
+				self.dead = true
 				self.vy = -200
 			end
 		end
@@ -139,12 +136,12 @@ function loaf:resolveCollision(entity, dir)
 	end
 end
 
-function loaf:draw()
+function cupcake:draw()
 	love.graphics.setColor(255,255,255)
-	if self.vx == 0 then
-		love.graphics.draw(img["loaf-idle"], self.x+50, self.y, 0, 0.5*-self.moveDir, 0.5, 200, 87)
+	if self.onGround then
+		animation["cupcake-throwing"]:draw(img["cupcake-throwing"], self.x+20, self.y+10, self.angle, 0.5*-self.dir, 0.5, 75, 75)
 	else
-		animation["loaf-loafing"]:draw(img["loaf-loafing"], self.x+50, self.y, 0, 0.5*-self.moveDir, 0.5, 200, 87)
+		animation["cupcake-falling"]:draw(img["cupcake-falling"], self.x+20, self.y+10, self.angle, 0.5*-self.dir, 0.5, 75, 75)
 	end
 	if gameMode.showHitboxes then
 		love.graphics.setColor(255,0,0,150)

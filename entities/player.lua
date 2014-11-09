@@ -195,7 +195,7 @@ function player:resolveCollision(entity, dir)
 			if (dir ~= "down" and dir ~= "in") or entity.standingOn ~= 0 then
 				if self.invuln <= 0 and (not self.supercharged) then self:getHit(entity) end
 			else
-				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 and entity.id ~= "loaf" then
+				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 and entity.id ~= "loaf" and entity.id ~= "cupcake" then
 					entity:kill()
 					gameMode:addBread(entity.id)
 				else
