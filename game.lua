@@ -65,7 +65,7 @@ function game:init()
 	breadSpawnTimer = 3
 
 	--load level
-	currentLevel = 5
+	currentLevel = 6
 	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false

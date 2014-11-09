@@ -137,6 +137,7 @@ function game:loadLevel(num)
 		--self:addEnt(loaf,{gameWidth-159, 459, false})
 		self:addEnt(breadman,{500, gameHeight - 180, false})
 		self:addEnt(breadman,{200, gameHeight - 180, false})
+		--X,Y,Direction(1 face right, -1 face left) Bagels Poptarts
 		numEnemies = 2
 		numSpecial = 1
 
@@ -159,8 +160,8 @@ function game:loadLevel(num)
 		self:addEnt(background, {55,-25,0.25,0.4,"ftree1"})	
 		self:addEnt(background, {110,-25,0.25,0.4,"ftree3"})
 		self:addEnt(background, {175,-25,0.25,0.4,"ftree1"})
-		self:addEnt(background, {240,-25,0.25,0.4,"ftree3"})
-		self:addEnt(background, {530,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {340,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {430,-25,0.25,0.4,"ftree1"})
 		self:addEnt(background, {595,-25,0.25,0.4,"ftree3"})
 		self:addEnt(background, {650,-25,0.25,0.4,"ftree1"})
 		--Now begins closer background objects
@@ -187,12 +188,74 @@ function game:loadLevel(num)
 		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
 		self:addEnt(platform,{0, gameHeight-40, gameWidth/2, 40, 1, "ground3", 1.4, 0.4, 890, 40})
 		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground3", 0.8, 0.35, 0, 40})
-		self:addEnt(platform,{gameWidth-250, 460, 300, 20, 3, "platform", 0.25, 0.15, 100, 10})
+		self:addEnt(platform,{100, 440, 260, 20, 3, "platform", 0.25, 0.15, 80, 10})--left
+		self:addEnt(platform,{gameWidth/2-120, 320, 260, 20, 3, "platform", 0.25, 0.15, 80, 10})--top mid
+		self:addEnt(platform,{gameWidth-350, 440, 260, 20, 3, "platform", 0.25, 0.15, 80, 10})--right
 		self:addEnt(platform,{-100, gameHeight-40, gameWidth+200, 40, 1, "ground2", 0.8, 0.5, 0, 40})
 
 		--enemies
 		--{x, y, hasParachute}
-		--TODO: ADD LOAF
+		--TODO: ADD ACTUAL ENEMIES
+		self:addEnt(breadman,{120, 400, false})
+		self:addEnt(breadman,{460, 400, false})
+		self:addEnt(cupcake,{290, 310, 1})
+		--self:addEnt(bagel,{100, 520, 1})
+		--self:addEnt(bagel,{700, 520, -1})
+		--X,Y,Direction(1 face right, -1 face left) Bagels Poptarts
+		numEnemies = 2
+		numSpecial = 0
+
+	end
+
+
+
+	if num == 7 then
+
+		--backgrounds
+		--{x, y, scalex, scaley, img}
+		self:addEnt(background, {-50,-25,1,1.25,"sky-green"})
+		--large trees
+		self:addEnt(background, {-20,-30,0.75,0.4,"vine1"})
+		self:addEnt(background, {-75,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {-10,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {55,-25,0.25,0.4,"ftree1"})	
+		self:addEnt(background, {110,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {175,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {340,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {430,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {595,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {650,-25,0.25,0.4,"ftree1"})
+		--Now begins closer background objects
+		self:addEnt(background, {0,340,0.15,0.15,"ftree1"})
+
+
+
+		self:addEnt(background, {100,520,0.15,0.15,"wheat1"})
+
+		self:addEnt(background, {200,440,0.15,0.15,"ftree3"})
+
+		self:addEnt(background, {699,440,0.15,0.15,"ftree5"})
+
+		self:addEnt(background, {550,440,0.15,0.15,"ftree2"})
+		self:addEnt(background, {500,370,0.15,0.15,"ftree1"})
+		self:addEnt(background, {50,-10,0.15,0.15,"vine1"})
+		self:addEnt(background, {100,-10,0.15,0.2,"vine2"})
+		self:addEnt(background, {600,-10,0.15,0.15,"vine2"})
+		self:addEnt(background, {500,420,0.15,0.15,"wheat2"})
+
+		--platforms
+		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
+		self:addEnt(platform,{-100, gameHeight-40, gameWidth/2, 40, 1, "ground3", 1.4, 0.4, 890, 40})
+		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground3", 0.8, 0.35, 0, 40})
+		self:addEnt(platform,{100, 440, 260, 20, 3, "platform", 0.25, 0.15, 80, 10})--left lower
+		self:addEnt(platform,{gameWidth/2-70, 320, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--middle
+		self:addEnt(platform,{gameWidth-350, 440, 260, 20, 3, "platform", 0.25, 0.15, 80, 10})--Right lower
+		self:addEnt(platform,{gameWidth-200, 200, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Right top: Cupcake here
+		self:addEnt(platform,{50, 200, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Left top: Cupcake Here
+
+		--enemies
+		--{x, y, hasParachute}
+		--TODO: ADD ACTUAL ENEMIES
 		--self:addEnt(loaf,{gameWidth-159, 459, false})
 		self:addEnt(breadman,{500, gameHeight - 180, false})
 		self:addEnt(breadman,{200, gameHeight - 180, false})
@@ -203,6 +266,124 @@ function game:loadLevel(num)
 
 	end
 
+
+
+	if num == 8 then
+
+		--backgrounds
+		--{x, y, scalex, scaley, img}
+		self:addEnt(background, {-50,-25,1,1.25,"sky-green"})
+		--large trees
+		self:addEnt(background, {-20,-30,0.75,0.4,"vine1"})
+		self:addEnt(background, {-75,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {-10,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {55,-25,0.25,0.4,"ftree1"})	
+		self:addEnt(background, {110,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {175,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {340,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {430,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {595,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {650,-25,0.25,0.4,"ftree1"})
+		--Now begins closer background objects
+		self:addEnt(background, {0,340,0.15,0.15,"ftree1"})
+
+
+
+		self:addEnt(background, {100,520,0.15,0.15,"wheat1"})
+
+		self:addEnt(background, {200,440,0.15,0.15,"ftree3"})
+
+		self:addEnt(background, {400,420,0.15,0.15,"wheat2"})
+
+		self:addEnt(background, {699,440,0.15,0.15,"ftree5"})
+
+		self:addEnt(background, {550,440,0.15,0.15,"ftree2"})
+		self:addEnt(background, {500,370,0.15,0.15,"ftree1"})
+		self:addEnt(background, {50,-10,0.15,0.15,"vine1"})
+		self:addEnt(background, {100,-10,0.15,0.2,"vine2"})
+		self:addEnt(background, {600,-10,0.15,0.15,"vine2"})
+		self:addEnt(background, {650,420,0.15,0.15,"wheat3"})
+
+		--platforms
+		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
+		self:addEnt(platform,{-200, gameHeight-40, gameWidth/2, 40, 1, "ground3", 1.4, 0.4, 890, 40})
+		self:addEnt(platform,{gameWidth/2+200, gameHeight-40, gameWidth/2, 40, 1, "ground3", 0.8, 0.35, 0, 40})
+		self:addEnt(platform,{330, gameHeight-40, 150, 40, 1, "ground3", 0.13, 0.3, 0, 40})
+		
+		self:addEnt(platform,{gameWidth/2-70, 440, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--middle bottom
+		self:addEnt(platform,{gameWidth/2-70, 320, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--middle top
+		self:addEnt(platform,{gameWidth-200, 200, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Right top: Cupcake here
+
+		--enemies
+		--{x, y, hasParachute}
+		--TODO: ADD ACTUAL ENEMIES
+		--self:addEnt(loaf,{gameWidth-159, 459, false})
+		self:addEnt(breadman,{500, gameHeight - 180, false})
+		self:addEnt(breadman,{200, gameHeight - 180, false})
+		numEnemies = 2
+		numSpecial = 0
+
+		--spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
+
+	end
+
+
+
+	if num == 9 then
+
+		--backgrounds
+		--{x, y, scalex, scaley, img}
+		self:addEnt(background, {-50,-25,1,1.25,"sky-green"})
+		--large trees
+		self:addEnt(background, {-20,-30,0.75,0.4,"vine1"})
+		self:addEnt(background, {-10,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {55,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {175,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {340,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {650,-25,0.25,0.4,"ftree1"})
+		--Now begins closer background objects
+		self:addEnt(background, {0,340,0.15,0.15,"ftree1"})
+
+
+		self:addEnt(background, {100,520,0.15,0.15,"wheat1"})
+
+		self:addEnt(background, {200,440,0.15,0.15,"ftree3"})
+
+		self:addEnt(background, {400,420,0.15,0.15,"wheat2"})
+
+		self:addEnt(background, {150,-10,0.15,0.15,"vine1"})
+		self:addEnt(background, {200,-10,0.15,0.2,"vine2"})
+		self:addEnt(background, {400,-10,0.15,0.15,"vine2"})
+
+		--platforms
+		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
+		self:addEnt(platform,{-200, gameHeight-40, gameWidth/2, 40, 1, "ground3", 1.4, 0.4, 890, 40})
+		self:addEnt(platform,{330, gameHeight-40, 150, 40, 1, "ground3", 0.13, 0.3, 0, 40})
+		self:addEnt(platform,{750, gameHeight-40, 150, 40, 1, "ground3", 0.13, 0.3, 0, 40})
+		
+		self:addEnt(platform,{gameWidth/2-70, 440, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--center bot
+		self:addEnt(platform,{gameWidth/2-70, 320, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--center mid
+		self:addEnt(platform,{gameWidth/2-70, 200, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--center top
+		self:addEnt(platform,{50, 440, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Left bot: Cupcake Here
+		self:addEnt(platform,{50, 320, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Left mid: Cupcake Here
+		self:addEnt(platform,{50, 200, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Left top: Cupcake Here
+		self:addEnt(platform,{gameWidth-200, 440, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--Right lower
+		self:addEnt(platform,{gameWidth-200, 320, 156, 20, 3, "platform", 0.15, 0.15, 80, 10}) --Right mid: Cupcake here
+		self:addEnt(platform,{gameWidth-200, 200, 156, 20, 3, "platform", 0.15, 0.15, 80, 10})--Right top
+	
+
+		--enemies
+		--{x, y, hasParachute}
+		--TODO: ADD ACTUAL ENEMIES
+		--self:addEnt(loaf,{gameWidth-159, 459, false})
+		self:addEnt(breadman,{500, gameHeight - 180, false})
+		self:addEnt(breadman,{200, gameHeight - 180, false})
+		numEnemies = 2
+		numSpecial = 0
+
+		--spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
+
+	end
 
 end
 
