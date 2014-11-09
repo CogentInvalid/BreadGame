@@ -1,0 +1,52 @@
+Sound: Toaster
+user: rivernile7
+download link: http://freesound.org/people/rivernile7/sounds/240548/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Split sound into two parts, changed speed
+
+Sound: Cartoon_Punch_03.wav
+user: RSilveira_88
+download link: https://www.freesound.org/people/RSilveira_88/sounds/216197/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Isolate sound
+
+
+Sound: Lighting a match
+user: aent
+download link: https://www.freesound.org/people/aent/sounds/67258/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Isolate sound
+
+Sound: Mana Drink [166188 drminky potion-drink-regen].flac
+user: qubodup
+download link: https://www.freesound.org/people/qubodup/sounds/172590/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Isolate sound
+
+Sound: Sand walk.WAV
+user: DasDeer
+download link: https://www.freesound.org/people/DasDeer/sounds/161815/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Isolate sound, three different pieces
+
+Sound: beeps3.mp3
+user: steveygos93
+download link: https://www.freesound.org/people/steveygos93/sounds/103588/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Isolate sound: second beep
+
+Sound: beeps3.mp3
+user: Bruno_ph
+download link: http://freesound.org/people/Bruno_ph/sounds/109409/
+license link: http://creativecommons.org/licenses/by/3.0/
+Modification: Isolate sound
+
+
+
+Jaunty Gumption Kevin MacLeod (incompetech.com) 
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
+
+King of the Feast Kevin MacLeod (incompetech.com) 
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
