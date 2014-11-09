@@ -1,18 +1,20 @@
-bagel = class:new()
+loaf = class:new()
 
-function bagel:init(args)
+function loaf:init(args)
 
-	self.id = "bagel"; self.drawLayer = "breadman"
+	self.id = "loaf"; self.drawLayer = "breadman"
 
 	self.x = args[1]
 	self.y = args[2]
 	self.px = self.x; self.py = self.y --position last frame
 	self.vx = 0; self.vy = 0 --velocity
-	self.w = 40; self.h = 40 --width/height
+	self.w = 100; self.h = 40 --width/height
 
 	self.moveDir = args[3]
 	self.onGround = false
 	self.standingOn = 0
+
+	self.hp = 6
 
 	--does it collide with things
 	self.col = true
@@ -26,7 +28,7 @@ function bagel:init(args)
 	self.die = false
 end
 
-function bagel:update(dt)
+function loaf:update(dt)
 
 	--"ai"
 	if self.onGround then
@@ -35,10 +37,10 @@ function bagel:update(dt)
 		else
 			self.moveDir = -1
 		end
-		self.vx = self.vx + 200*self.moveDir*dt
+		self.vx = self.vx + 20*self.moveDir*dt
 	end
-	if self.vx > 300 then self.vx = 300 end
-	if self.vx < -300 then self.vx = -300 end
+	if self.vx > 5 then self.vx = 5 end
+	if self.vx < -5 then self.vx = -5 end
 
 	--flip
 	if self.x < 0 then
@@ -55,7 +57,22 @@ function bagel:update(dt)
 		self:kill()
 	end
 
+	--check bottom
+	local x = self.x+self.w/2+50*self.moveDir
+	local y = self.y+self.h+2
+	local found = false
+	for i=1, #ent do
+		if ent[i].id == "platform" then
+			if x > ent[i].x and x < ent[i].x+ent[i].w and y > ent[i].y and y < ent[i].y+ent[i].h then
+				found = true
+			end
+		end
+	end
+	if not found then
+		self.vx = 0
+	end
 
+	if self.vy < -100 then self.vy = -100 end
 	--gravity
 	local maxFall = 600
 	if self.vy < maxFall then
@@ -66,20 +83,6 @@ function bagel:update(dt)
 
 	--friction
 	if self.onGround then
-		--check bottom
-		local x = self.x+self.w/2
-		local y = self.y+self.h+2
-		local found = false
-		for i=1, #ent do
-			if ent[i].id == "platform" then
-				if x > ent[i].x and x < ent[i].x+ent[i].w and y > ent[i].y and y < ent[i].y+ent[i].h then
-					found = true
-				end
-			end
-		end
-		if not found then
-			self.vy = -300
-		end
 	else
 		self.standingOn = 0
 	end
@@ -93,33 +96,37 @@ function bagel:update(dt)
 	self.x = self.x + self.vx*dt
 	self.y = self.y + self.vy*dt
 
+	if self.hp <= 0 then self:kill() end
+
 end
 
-function bagel:land(ent)
+function loaf:land(ent)
 	self.onGround = true
 	self.standingOn = ent.num --id of current platform
 end
 
-function bagel:kill()
+function loaf:kill()
 	self.die = true
 	numEnemies = numEnemies - 1
+	numSpecial = numSpecial - 1
 end
 
-function bagel:hitSide(ent, dir)
+function loaf:hitSide(ent, dir)
 	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
 	if dir == "up" and (not self.dead) then self.y = ent.y-self.h; self.vy = 0; self:land(ent) end
 	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
-function bagel:resolveCollision(entity, dir)
+function loaf:resolveCollision(entity, dir)
 	if not love.keyboard.isDown("c") then
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
 		end
 		if entity.id == "projectile" then
 			if entity.friendly and self.dead == false then
-				self.dead = true
+				self.hp = self.hp - 1
+				entity.die = true
 				self.vy = -200
 			end
 		end
@@ -132,13 +139,9 @@ function bagel:resolveCollision(entity, dir)
 	end
 end
 
-function bagel:draw()
+function loaf:draw()
 	love.graphics.setColor(255,255,255)
-	if self.onGround then
-		animation["bagel-rolling"]:draw(img["bagel-rolling"], self.x+20, self.y+10, 0, 0.5*self.moveDir, 0.5, 75, 75)
-	else
-		animation["bagel-rolling"]:draw(img["bagel-falling"], self.x+20, self.y+10, 0, 0.5*self.moveDir, 0.5, 75, 75)
-	end
+	animation["loaf-loafing"]:draw(img["loaf-loafing"], self.x+50, self.y, 0, 0.5*-self.moveDir, 0.5, 200, 87)
 	if gameMode.showHitboxes then
 		love.graphics.setColor(255,0,0,150)
 		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)

@@ -7,6 +7,7 @@ require "entities/platform"
 require "entities/breadman"
 require "entities/poptart"
 require "entities/bagel"
+require "entities/loaf"
 require "entities/background"
 require "entities/projectile"
 
@@ -64,7 +65,7 @@ function game:init()
 	breadSpawnTimer = 3
 
 	--load level
-	currentLevel = 1
+	currentLevel = 5
 	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false
@@ -106,13 +107,14 @@ function game:update(delta)
 		--enemy spawning
 		breadSpawnTimer = breadSpawnTimer - dt
 		if breadSpawnTimer < 0 and (numSpecial > 0 or #spawnQueue > 0) then
+			if numSpecial > 0 then
+				self:randSpawn()
+			end
 			if #spawnQueue > 0 then
 				self:spawnEnemy(spawnQueue[1])
 				table.remove(spawnQueue, 1)
-			else
-				self:randSpawn()
 			end
-			breadSpawnTimer = 2
+			if #spawnQueue > 0 then breadSpawnTimer = 2 else breadSpawnTimer = 4 end
 		end
 
 		--iterate over every entity "entity" in the game
@@ -197,6 +199,22 @@ function game:spawnEnemy(selection)
 			local e = self:addEnt(bagel,{gameWidth+10, gameHeight - 80, -1})
 			e.vx = -50
 		end
+	end
+	if selection == "poptart" then
+		if math.random(2) == 1 then
+			local e = self:addEnt(poptart,{-50, gameHeight - 50, 1})
+			e.vx = 50; e.vy = -300
+		else
+			local e = self:addEnt(poptart,{gameWidth+10, gameHeight - 50, -1})
+			e.vx = -50; e.vy = -300
+		end
+	end
+	if selection == "loaf" then
+		local e = self:addEnt(loaf,{gameWidth, 360, -1})
+		e.vx = 50
+	end
+	if selection == "blank" then
+		numEnemies = numEnemies - 1
 	end
 	numEnemies = numEnemies + 1
 end

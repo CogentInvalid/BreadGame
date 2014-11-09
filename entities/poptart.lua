@@ -92,12 +92,12 @@ function poptart:resolveCollision(entity, dir)
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
 		end
-		if entity.id == "projectile" then
-			if entity.friendly and self.dead == false then
-				self.dead = true
-				self.vy = -200
-			end
-		end
+		--if entity.id == "projectile" then
+			--if entity.friendly and self.dead == false then
+				--self.dead = true
+				--self.vy = -200
+			--end
+		--end
 	end
 end
 

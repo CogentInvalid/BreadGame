@@ -53,6 +53,9 @@ function loadAssets()
 	grid["bagel-falling"] = anim8.newGrid(150, 150, 450, 300)
 	animation["bagel-falling"] = anim8.newAnimation(grid["bagel-falling"]('1-3','1-2'), 0.04)
 
+	grid["loaf-loafing"] = anim8.newGrid(400, 175, 2400, 1575)
+	animation["loaf-loafing"] = anim8.newAnimation(grid["loaf-loafing"]('1-6','1-9'), 0.04)
+
 	grid["fire"] = anim8.newGrid(150, 150, 600, 750)
 	animation["fire"] = anim8.newAnimation(grid["fire"]('1-4',1,'1-4',2,'1-4',3,'1-4',4,'1-3',5), 0.04)
 
