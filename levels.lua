@@ -18,7 +18,7 @@ function game:loadLevel(num)
 		self:addEnt(breadman,{500, gameHeight - 80, false})
 		self:addEnt(breadman,{200, gameHeight - 80, false})
 		numEnemies = 2
-		self:addEnt(poptart,{0, gameHeight - 200, 1})
+		self:addEnt(poptart,{gameWidth/2-250, gameHeight - 200, 1})
 		numEnemies = 3
 		numSpecial = 0
 
@@ -131,6 +131,65 @@ function game:loadLevel(num)
 		self:addEnt(platform,{0, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 890, 40})
 		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 0, 40})
 		self:addEnt(platform,{gameWidth-250, 460, 300, 20, 3, "platform", 0.25, 0.15, 100, 10})
+
+		--enemies
+		--{x, y, hasParachute}
+		--TODO: ADD LOAF
+		--self:addEnt(loaf,{gameWidth-159, 459, false})
+		self:addEnt(breadman,{500, gameHeight - 180, false})
+		self:addEnt(breadman,{200, gameHeight - 180, false})
+		numEnemies = 2
+		numSpecial = 0
+
+		spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
+
+	end
+
+
+--Second Set of Stages (forest) begins here:
+
+	if num == 6 then
+
+		--backgrounds
+		--{x, y, scalex, scaley, img}
+		self:addEnt(background, {-50,-25,1,1.25,"sky-green"})
+		--large trees
+		self:addEnt(background, {-20,-30,0.75,0.4,"vine1"})
+		self:addEnt(background, {-75,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {-10,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {55,-25,0.25,0.4,"ftree1"})	
+		self:addEnt(background, {110,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {175,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {240,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {530,-25,0.25,0.4,"ftree1"})
+		self:addEnt(background, {595,-25,0.25,0.4,"ftree3"})
+		self:addEnt(background, {650,-25,0.25,0.4,"ftree1"})
+		--Now begins closer background objects
+		self:addEnt(background, {0,340,0.15,0.15,"ftree1"})
+
+
+
+		self:addEnt(background, {100,520,0.15,0.15,"wheat1"})
+
+		self:addEnt(background, {200,440,0.15,0.15,"ftree3"})
+
+		self:addEnt(background, {300,420,0.15,0.15,"wheat3"})
+
+		self:addEnt(background, {699,440,0.15,0.15,"ftree5"})
+
+		self:addEnt(background, {550,440,0.15,0.15,"ftree2"})
+		self:addEnt(background, {500,370,0.15,0.15,"ftree1"})
+		self:addEnt(background, {50,-10,0.15,0.15,"vine1"})
+		self:addEnt(background, {100,-10,0.15,0.2,"vine2"})
+		self:addEnt(background, {600,-10,0.15,0.15,"vine2"})
+		self:addEnt(background, {500,420,0.15,0.15,"wheat2"})
+
+		--platforms
+		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
+		self:addEnt(platform,{0, gameHeight-40, gameWidth/2, 40, 1, "ground3", 1.4, 0.4, 890, 40})
+		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground3", 0.8, 0.35, 0, 40})
+		self:addEnt(platform,{gameWidth-250, 460, 300, 20, 3, "platform", 0.25, 0.15, 100, 10})
+		self:addEnt(platform,{-100, gameHeight-40, gameWidth+200, 40, 1, "ground2", 0.8, 0.5, 0, 40})
 
 		--enemies
 		--{x, y, hasParachute}
