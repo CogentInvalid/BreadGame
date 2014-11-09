@@ -8,7 +8,8 @@ function loaf:init(args)
 	self.y = args[2]
 	self.px = self.x; self.py = self.y --position last frame
 	self.vx = 0; self.vy = 0 --velocity
-	self.w = 100; self.h = 40 --width/height
+	self.w = 100; self.h = 60 --width/height
+	self.y = self.y - 20
 
 	self.moveDir = args[3]
 	self.onGround = false
@@ -142,9 +143,9 @@ end
 function loaf:draw()
 	love.graphics.setColor(255,255,255)
 	if self.vx == 0 then
-		love.graphics.draw(img["loaf-idle"], self.x+50, self.y, 0, 0.5*-self.moveDir, 0.5, 200, 87)
+		love.graphics.draw(img["loaf-idle"], self.x+50, self.y+20, 0, 0.5*-self.moveDir, 0.5, 200, 87)
 	else
-		animation["loaf-loafing"]:draw(img["loaf-loafing"], self.x+50, self.y, 0, 0.5*-self.moveDir, 0.5, 200, 87)
+		animation["loaf-loafing"]:draw(img["loaf-loafing"], self.x+50, self.y+20, 0, 0.5*-self.moveDir, 0.5, 200, 87)
 	end
 	if gameMode.showHitboxes then
 		love.graphics.setColor(255,0,0,150)

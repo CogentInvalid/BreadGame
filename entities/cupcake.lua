@@ -107,6 +107,7 @@ end
 function cupcake:kill()
 	self.die = true
 	numEnemies = numEnemies - 1
+	numSpecial = numSpecial - 1
 end
 
 function cupcake:hitSide(ent, dir)

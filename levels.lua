@@ -123,12 +123,14 @@ function game:loadLevel(num)
 		self:addEnt(background, {50,50,0.15,0.15,"cloud1"})
 		self:addEnt(background, {600,150,0.15,0.15,"cloud2"})
 		self:addEnt(background, {gameWidth-150,430,0.15,0.15,"pillar"})
+		self:addEnt(background, {500-100,460,0.15,0.15,"pillar"})
 
 		--platforms
 		--{x, y, width, height, unique number, img, scalex, scaley, x-offset, y-offset}
 		self:addEnt(platform,{-50, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 890, 40})
 		self:addEnt(platform,{gameWidth/2+100, gameHeight-40, gameWidth/2, 40, 1, "ground", 0.8, 0.5, 0, 40})
 		self:addEnt(platform,{gameWidth-250, 400, 300, 20, 3, "platform", 0.25, 0.15, 100, 10})
+		self:addEnt(platform,{350, 460, 150, 20, 2, "platform", 0.15, 0.15, 100, 10})
 
 		--enemies
 		--{x, y, hasParachute}

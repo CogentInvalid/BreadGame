@@ -24,6 +24,8 @@ function loadAssets()
 	sound["BreadTheme1"]:setVolume(0.6)
 	sound["BreadTheme2"]:setLooping(true)
 	sound["BreadTheme2"]:setVolume(0.6)
+	sound["GameOver"]:setLooping(true)
+	sound["GameOver"]:setVolume(0.6)
 
 	--animations
 	grid = {}
