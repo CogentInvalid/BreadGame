@@ -17,7 +17,6 @@ function game:loadLevel(num)
 		--enemies
 		self:addEnt(breadman,{500, gameHeight - 80, false})
 		self:addEnt(breadman,{200, gameHeight - 80, false})
-		self:addEnt(cupcake,{gameWidth/2, -20, -1})
 		numEnemies = 3
 		numSpecial = 0
 
@@ -200,11 +199,11 @@ function game:loadLevel(num)
 		self:addEnt(breadman,{120, 400, false})
 		self:addEnt(breadman,{460, 400, false})
 		self:addEnt(cupcake,{290, 310, 1})
-		--self:addEnt(bagel,{100, 520, 1})
-		--self:addEnt(bagel,{700, 520, -1})
+		self:addEnt(bagel,{100, 520, 1})
+		self:addEnt(bagel,{700, 520, -1})
 		--X,Y,Direction(1 face right, -1 face left) Bagels Poptarts
-		numEnemies = 2
-		numSpecial = 0
+		numEnemies = 5
+		numSpecial = 1
 
 	end
 
@@ -257,13 +256,15 @@ function game:loadLevel(num)
 		--enemies
 		--{x, y, hasParachute}
 		--TODO: ADD ACTUAL ENEMIES
-		--self:addEnt(loaf,{gameWidth-159, 459, false})
-		self:addEnt(breadman,{500, gameHeight - 180, false})
-		self:addEnt(breadman,{200, gameHeight - 180, false})
-		numEnemies = 2
-		numSpecial = 0
+		self:addEnt(cupcake,{610, 140, -1})
+		self:addEnt(cupcake,{60, 140, 1})
+		self:addEnt(bagel,{700, 700, -1})
+		self:addEnt(bagel,{200, 700, 1})
+		--X,Y,Direction(1 face right, -1 face left) Bagels Poptarts
+		numEnemies = 4
+		numSpecial = 2
 
-		--spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
+		spawnQueue = {"blank", "blank", "poptart", "bagel"}
 
 	end
 
@@ -318,13 +319,16 @@ function game:loadLevel(num)
 		--enemies
 		--{x, y, hasParachute}
 		--TODO: ADD ACTUAL ENEMIES
-		--self:addEnt(loaf,{gameWidth-159, 459, false})
-		self:addEnt(breadman,{500, gameHeight - 180, false})
-		self:addEnt(breadman,{200, gameHeight - 180, false})
-		numEnemies = 2
-		numSpecial = 0
+		self:addEnt(bagel,{100, 700, 1})
+		self:addEnt(bagel,{600, 700, -1})
+		self:addEnt(cupcake,{350, 140, 1})
+		self:addEnt(cupcake,{350, 280, -1})
+		self:addEnt(cupcake,{620, 140, -1})
+		--X,Y,Direction(1 face right, -1 face left) Bagels Poptarts
+		numEnemies = 5
+		numSpecial = 3
 
-		--spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
+		spawnQueue = {"bagel", "blank", "blank", "bagel"}
 
 	end
 
@@ -376,14 +380,23 @@ function game:loadLevel(num)
 		--enemies
 		--{x, y, hasParachute}
 		--TODO: ADD ACTUAL ENEMIES
-		--self:addEnt(loaf,{gameWidth-159, 459, false})
-		self:addEnt(breadman,{500, gameHeight - 180, false})
-		self:addEnt(breadman,{200, gameHeight - 180, false})
-		numEnemies = 2
-		numSpecial = 0
+		self:addEnt(cupcake,{60, 390, 1})
+		self:addEnt(cupcake,{60, 270, 1})
+		self:addEnt(cupcake,{60, 150, 1})
+		self:addEnt(cupcake,{620, 390, -1})
+		self:addEnt(cupcake,{620, 270, -1})
+		self:addEnt(cupcake,{620, 150, -1})
+		self:addEnt(breadman,{330, 390, false})
+		self:addEnt(breadman,{330, 270, false})
+		self:addEnt(breadman,{330, 150, false})
+		--X,Y,Direction(1 face right, -1 face left) Bagels Poptarts
+		numEnemies = 9
+		numSpecial = 6
 
-		--spawnQueue = {"RIGHTSIDEINFINITE", "TOPINFINITE", "LOAF"}
+	end
 
+	if num == 10 then
+		gameMode:winGame()
 	end
 
 end
