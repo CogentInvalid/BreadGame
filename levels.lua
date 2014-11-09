@@ -17,12 +17,9 @@ function game:loadLevel(num)
 		--enemies
 		self:addEnt(breadman,{500, gameHeight - 80, false})
 		self:addEnt(breadman,{200, gameHeight - 80, false})
-<<<<<<< HEAD
 		numEnemies = 2
-=======
-		self:addEnt(bagel,{0, gameHeight - 80, 1})
+		self:addEnt(poptart,{0, gameHeight - 200, 1})
 		numEnemies = 3
->>>>>>> origin/master
 		numSpecial = 0
 
 	end
@@ -112,12 +109,9 @@ function game:loadLevel(num)
 		numEnemies = 1
 		numSpecial = 0
 
-<<<<<<< HEAD
 		spawnQueue = {"bagel","side","side","side","side"}
-=======
 		--goes in reverse order because i'm lazy
 		spawnQueue = {"bagel"}
->>>>>>> origin/master
 
 	end
 

@@ -43,7 +43,7 @@ end
 
 function projectile:draw()
 	love.graphics.setColor(255,255,255)
-	if self.imgName == "bread-dead-black" then
+	if self.imgName == "bread-dead-black" or self.imgName == "bagel-dead-black" then
 		animation["fire"]:draw(img["fire"], self.x-20, self.y-20, 0, 0.5, 0.5, 0, 0)
 	end
 	love.graphics.draw(self.img, self.x-20, self.y-20, 0, 0.5, 0.5)

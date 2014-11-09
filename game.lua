@@ -63,7 +63,7 @@ function game:init()
 	breadSpawnTimer = 3
 
 	--load level
-	currentLevel = 4
+	currentLevel = 1
 	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false
@@ -152,7 +152,7 @@ end
 function game:ejectBread()
 	if breadSlots[3].type ~= "none" then
 		if breadSlots[3].health < 33 then
-			self:addEnt(projectile,{p.x, p.y, 40, 40, true, "bread-dead-black", p.moveDir*400+p.vx/2, -80+p.vy/2, 250, 2})
+			self:addEnt(projectile,{p.x, p.y, 40, 40, true, breadSlots[3].imgName, p.moveDir*400+p.vx/2, -80+p.vy/2, 250, 2})
 		else
 			self:addEnt(projectile,{p.x, p.y, 40, 40, false, breadSlots[3].imgName, p.moveDir*40+p.vx/2, -200+p.vy/2, 500, 2})
 		end

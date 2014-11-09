@@ -9,17 +9,46 @@ function breadSlot:init(type, x, y)
 	self.img = img["bread-dead-white"]
 	self.imgName = "bread-dead-white"
 
+	self.r = 255; self.g = 255; self.b = 255
+	self.tr = 255; self.tg = 255; self.tb = 255
+	self.flashTimer = 0.2
+
 	self.die = false
 end
 
 function breadSlot:update(dt)
+
 	if self.type == "breadman" then
+		self.r = 255; self.g = 255; self.b = 255
 		self.imgName = "bread-dead-black"
 		if self.health > 33 then self.imgName = "bread-dead-brown" end
 		if self.health > 55 then self.imgName = "bread-dead-tan" end
 		if self.health > 77 then self.imgName = "bread-dead-white" end
 		self.img = img[self.imgName]
 	end
+
+	if self.type == "bagel" then
+		self.r = 255; self.g = 255; self.b = 255
+		self.imgName = "bagel-dead-black"
+		if self.health > 33 then self.imgName = "bagel-dead-brown" end
+		if self.health > 55 then self.imgName = "bagel-dead-tan" end
+		if self.health > 77 then self.imgName = "bagel-dead-white" end
+		self.img = img[self.imgName]
+	end
+
+	if self.type == "poptart" then
+		self.flashTimer = self.flashTimer - dt
+		if self.flashTimer < 0 then
+			self.tr, self.tg, self.tb = randHue()
+			self.flashTimer = 0.2
+		end
+		self.r = self.r - (self.r - self.tr)*5*dt
+		self.g = self.g - (self.g - self.tg)*5*dt
+		self.b = self.b - (self.b - self.tb)*5*dt
+		self.imgName = "poptart-icon"
+		self.img = img[self.imgName]
+	end
+
 end
 
 function breadSlot:draw()
@@ -27,6 +56,7 @@ function breadSlot:draw()
 	if self.health < 33 then
 		animation["fire"]:draw(img["fire"], self.x, self.y, 0, 0.5, 0.5, 0, 0)
 	end
+	love.graphics.setColor(self.r,self.g,self.b)
 	if self.type ~= "none" then love.graphics.draw(self.img, self.x, self.y, 0, 0.5, 0.5) end
 end
 
