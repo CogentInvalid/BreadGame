@@ -54,8 +54,7 @@ function breadman:update(dt)
 
 	--level bounds
 	if self.x+self.w+20 < 0 or self.x-20 > gameWidth or self.y-20 > gameHeight then
-		self.die = true
-		if not self.dead then numEnemies = numEnemies - 1 end
+		self:kill()
 	end
 
 	--gravity
@@ -125,6 +124,11 @@ function breadman:hitSide(ent, dir)
 	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
+function breadman:kill()
+	self.die = true
+	numEnemies = numEnemies - 1
+end
+
 function breadman:resolveCollision(entity, dir)
 	if not love.keyboard.isDown("c") then
 		if entity.id == "platform" then
@@ -133,14 +137,12 @@ function breadman:resolveCollision(entity, dir)
 		if entity.id == "projectile" then
 			if entity.friendly and self.dead == false then
 				self.dead = true
-				numEnemies = numEnemies - 1
 				self.vy = -200
 			end
 		end
 		if entity.id == "player" then
 			if entity.supercharged and self.dead == false then
 				self.dead = true
-				numEnemies = numEnemies - 1
 				self.vy = -200
 			end
 		end

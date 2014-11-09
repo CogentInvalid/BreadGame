@@ -5,6 +5,7 @@ require "entities/player"
 require "entities/platform"
 require "entities/breadman"
 require "entities/poptart"
+require "entities/bagel"
 require "entities/background"
 require "entities/projectile"
 
@@ -132,7 +133,7 @@ end
 --find breadmen near ground pound at x, y and launch them into the air
 function game:pound(x, y, num)
 	for i,entity in ipairs(ent) do
-		if entity.id == "breadman" and entity.standingOn == num then
+		if entity.drawLayer == "breadman" and entity.standingOn == num then
 			if math.abs(entity.y+entity.h - y) < 10 then
 				entity.y = entity.y - 5
 				local distance = math.abs(entity.x+entity.w/2-x)

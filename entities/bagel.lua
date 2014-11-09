@@ -1,21 +1,18 @@
-poptart = class:new()
+bagel = class:new()
 
-function poptart:init(args)
+function bagel:init(args)
 
-	self.id = "poptart"; self.drawLayer = "breadman"
+	self.id = "bagel"; self.drawLayer = "breadman"
 
 	self.x = args[1]
 	self.y = args[2]
-	self.px = self.x; self.py = self.y --player's position last frame
+	self.px = self.x; self.py = self.y --position last frame
 	self.vx = 0; self.vy = 0 --velocity
 	self.w = 40; self.h = 40 --width/height
 
 	self.moveDir = args[3]
 	self.onGround = false
 	self.standingOn = 0
-
-	self.jumpTimer = 1
-	self.angle = 0
 
 	--does it collide with things
 	self.col = true
@@ -29,27 +26,40 @@ function poptart:init(args)
 	self.die = false
 end
 
-function poptart:update(dt)
+function bagel:update(dt)
 
 	--"ai"
-	if self.onGround then self.vx = self.vx - (self.vx - 100*self.moveDir)*3*dt end
+	if self.onGround then
+		if self.x+self.w/2 < p.x+p.w/2 then
+			self.moveDir = 1
+		else
+			self.moveDir = -1
+		end
+		self.vx = self.vx + 200*self.moveDir*dt
+	end
+	if self.vx > 300 then self.vx = 300 end
+	if self.vx < -300 then self.vx = -300 end
+
+	--flip
+	if self.x < 0 then
+		if self.vx < 0 then self.vx = -self.vx/2 end
+		self.moveDir = 1
+	end
+	if self.x+self.w > gameWidth then
+		if self.vx > 0 then self.vx = -self.vx/2 end
+		self.moveDir = -1
+	end
 
 	--level bounds
 	if self.x+self.w+20 < 0 or self.x-20 > gameWidth or self.y-20 > gameHeight then
-		self:kill()
-	end
-
-	if self.onGround then self.jumpTimer = self.jumpTimer - dt end
-	if self.jumpTimer < 0 then
-		self.vy = -600
-		self.jumpTimer = 1
+		self:die()
 	end
 
 	--gravity
 	local maxFall = 600
 	if self.vy < maxFall then
 		--falling
-		self.vy = self.vy + (600*dt)
+		self.vy = self.vy + (400*dt)
 	end
 	if self.vy > maxFall then self.vy = maxFall end
 
@@ -70,24 +80,24 @@ function poptart:update(dt)
 
 end
 
-function poptart:land(ent)
+function bagel:land(ent)
 	self.onGround = true
 	self.standingOn = ent.num --id of current platform
 end
 
-function poptart:kill()
+function bagel:kill()
 	self.die = true
 	numEnemies = numEnemies - 1
 end
 
-function poptart:hitSide(ent, dir)
+function bagel:hitSide(ent, dir)
 	--if dir == "left" then self.x = ent.x-self.w; self.vx = 0 end
 	--if dir == "right" then self.x = ent.x+ent.w; self.vx = 0 end
 	if dir == "up" and (not self.dead) then self.y = ent.y-self.h; self.vy = 0; self:land(ent) end
 	--if dir == "down" then self.y = ent.y+ent.h; self.vy = 0 end
 end
 
-function poptart:resolveCollision(entity, dir)
+function bagel:resolveCollision(entity, dir)
 	if not love.keyboard.isDown("c") then
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
@@ -101,9 +111,13 @@ function poptart:resolveCollision(entity, dir)
 	end
 end
 
-function poptart:draw()
+function bagel:draw()
 	love.graphics.setColor(255,255,255)
-	animation["poptart-running"]:draw(img["poptart-running"], self.x+20, self.y+10, self.angle, 0.5*self.moveDir, 0.5, 87, 87)
+	if self.onGround then
+		animation["bagel-rolling"]:draw(img["bagel-rolling"], self.x+20, self.y+10, 0, 0.5*self.moveDir, 0.5, 75, 75)
+	else
+		animation["bagel-rolling"]:draw(img["bagel-falling"], self.x+20, self.y+10, 0, 0.5*self.moveDir, 0.5, 75, 75)
+	end
 	if gameMode.showHitboxes then
 		love.graphics.setColor(255,0,0,150)
 		love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)

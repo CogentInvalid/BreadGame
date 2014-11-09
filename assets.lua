@@ -32,6 +32,12 @@ function loadAssets()
 	grid["poptart-running"] = anim8.newGrid(175, 175, 700, 700)
 	animation["poptart-running"] = anim8.newAnimation(grid["poptart-running"]('1-4','1-4'), 0.04)
 
+	grid["bagel-rolling"] = anim8.newGrid(150, 150, 450, 300)
+	animation["bagel-rolling"] = anim8.newAnimation(grid["bagel-rolling"]('1-3','1-2'), 0.04)
+
+	grid["bagel-falling"] = anim8.newGrid(150, 150, 450, 300)
+	animation["bagel-falling"] = anim8.newAnimation(grid["bagel-falling"]('1-3','1-2'), 0.04)
+
 	grid["fire"] = anim8.newGrid(150, 150, 600, 750)
 	animation["fire"] = anim8.newAnimation(grid["fire"]('1-4',1,'1-4',2,'1-4',3,'1-4',4,'1-3',5), 0.04)
 

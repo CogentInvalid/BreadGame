@@ -188,8 +188,7 @@ function player:resolveCollision(entity, dir)
 				if self.invuln <= 0 and (not self.supercharged) then self:getHit(entity) end
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
-					entity.die = true
-					numEnemies = numEnemies - 1
+					entity:kill()
 					gameMode:addBread(entity.id)
 				else
 					entity.vx = ((entity.x+entity.w/2)-(self.x+self.w/2))*5
