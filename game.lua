@@ -78,7 +78,7 @@ function game:load()
 	breadSpawnTimer = 3
 
 	--load level
-	currentLevel = 6
+	currentLevel = 1
 	self:loadLevel(currentLevel) --in levels.lua
 
 	self.showHitboxes = false
@@ -145,6 +145,7 @@ function game:update(delta)
 		end
 
 		if self.endGame then self:loseGame() end
+		if self.endWin then self:winGame() end
 
 		accum = accum - 0.01
 	end
@@ -234,12 +235,14 @@ function game:loseGame()
 	self:load()
 	mode = menuMode
 	menuMode.mode = "dead"
+	sound["BreadTheme1"]:stop()
 end
 
 function game:winGame()
 	self:load()
 	mode = menuMode
 	menuMode.mode = "win"
+	sound["BreadTheme1"]:stop()
 end
 
 function game:addEnt(type, args)
@@ -290,6 +293,4 @@ function game:keypressed(key)
 		animation["toaster-groundpound"]:resume()
 	end
 	if key == bind["attack"] then self:ejectBread() end
-	if key == "p" then self.showHitboxes = not self.showHitboxes end
-	if key == "d" then playSound("BreadEject") end
 end

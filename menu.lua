@@ -3,7 +3,7 @@ menu = class:new()
 function menu:init()
 	self.enterTimer = 1
 	self.entering = false
-	self.mode = "win"
+	self.mode = "main"
 end
 
 function menu:update(dt)
