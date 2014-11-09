@@ -137,6 +137,13 @@ function breadman:resolveCollision(entity, dir)
 				self.vy = -200
 			end
 		end
+		if entity.id == "player" then
+			if entity.supercharged and self.dead == false then
+				self.dead = true
+				numEnemies = numEnemies - 1
+				self.vy = -200
+			end
+		end
 	end
 end
 

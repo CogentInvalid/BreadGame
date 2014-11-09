@@ -106,3 +106,18 @@ function mergeTables(t1,t2) --also 100% original
     end
     return t1
 end
+
+function randHue()
+	local color = {}
+	for i=1, 3 do color[i] = 0 end
+	local rand = math.random(3)
+	color[rand] = 255
+	local found = false
+	local rand2 = 1
+	while not found do rand2 = math.random(3); if rand2 ~= rand then found = true end end
+	color[rand2] = math.random(255)
+	found = false
+	while not found do rand3 = math.random(3); if rand3 ~= rand and rand3 ~= rand2 then found = true end end
+	color[rand3] = 0
+	return color[1], color[2], color[3]
+end

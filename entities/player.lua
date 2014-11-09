@@ -17,6 +17,8 @@ function player:init(args)
 	self.standingOn = 0
 
 	self.supercharged = false
+	self.flashTimer = 0.1
+	self.tr = 255; self.tg = 255; self.tb = 255
 	self.r = 255; self.g = 255; self.b = 255
 
 	self.hp = 100
@@ -106,6 +108,20 @@ function player:update(dt)
 	end
 	if self.invuln < 0 then self.invuln = 0 end
 
+	--supercharge
+	if self.supercharged then
+		self.flashTimer = self.flashTimer - dt
+		if self.flashTimer < 0 then
+			self.tr, self.tg, self.tb = randHue()
+			self.flashTimer = 0.2
+		end
+		self.r = self.r - (self.r - self.tr)*5*dt
+		self.g = self.g - (self.g - self.tg)*5*dt
+		self.b = self.b - (self.b - self.tb)*5*dt
+	else
+		self.r = 255; self.g = 255; self.b = 255
+	end
+
 	self.px = self.x --magic
 	self.py = self.y
 
@@ -169,7 +185,7 @@ function player:resolveCollision(entity, dir)
 		end
 		if entity.drawLayer == "breadman" and (not entity.dead) then
 			if (dir ~= "down" and dir ~= "in") or entity.standingOn ~= 0 then
-				if self.invuln <= 0 then self:getHit(entity) end
+				if self.invuln <= 0 and (not self.supercharged) then self:getHit(entity) end
 			else
 				if math.abs((entity.x+entity.w/2)-(self.x+self.w/2)) < 20 then
 					entity.die = true
@@ -188,7 +204,7 @@ end
 
 function player:draw()
 
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(self.r,self.g,self.b)
 	--animation
 	if not self.pounding then
 		if (love.keyboard.isDown(bind["left"]) or love.keyboard.isDown(bind["right"])) and (self.onGround) then
