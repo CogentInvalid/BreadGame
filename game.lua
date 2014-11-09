@@ -4,6 +4,7 @@ require "collisions"
 require "entities/player"
 require "entities/platform"
 require "entities/breadman"
+require "entities/poptart"
 require "entities/background"
 require "entities/projectile"
 
@@ -203,11 +204,11 @@ function game:draw()
 		--love.graphics.rectangle("fill", -20, -20, gameWidth+40, gameHeight+40)
 
 		love.graphics.setColor(255,255,255)
-		love.graphics.draw(img["sky-blue"], -20, -20, 0, 0.5, 0.5)
+		love.graphics.draw(img["sky-blue"], -20, -20, 0, 0.5, 0.6)
 
 		for j,layer in ipairs(self.drawOrder) do
 			for i=1, #ent do
-				if ent[i].id == layer then ent[i]:draw() end
+				if ent[i].drawLayer == layer then ent[i]:draw() end
 			end
 		end
 

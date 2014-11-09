@@ -2,7 +2,7 @@ platform = class:new()
 
 function platform:init(args)
 
-	self.id = "platform"
+	self.id = "platform"; self.drawLayer = "platform"
 
 	self.x = args[1]; self.y = args[2]
 	self.px = self.x; self.py = self.y

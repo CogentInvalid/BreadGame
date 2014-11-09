@@ -2,7 +2,7 @@ player = class:new()
 
 function player:init(args)
 
-	self.id = "player"
+	self.id = "player"; self.drawLayer = "player"
 
 	self.x = args[1]
 	self.y = args[2]
@@ -16,6 +16,9 @@ function player:init(args)
 	self.onGround = false
 	self.standingOn = 0
 
+	self.supercharged = false
+	self.r = 255; self.g = 255; self.b = 255
+
 	self.hp = 100
 	self.invuln = 0
 
@@ -27,6 +30,7 @@ function player:init(args)
 
 	--delete this next frame?
 	self.die = false
+	self.dead = false
 end
 
 function player:update(dt)
@@ -118,7 +122,7 @@ function player:update(dt)
 		self.onGround = false
 	end
 
-	if self.hp < 0 then self.hp = 0; self.die = true end
+	if self.hp < 0 then self.hp = 0; self.dead = true end
 
 end
 
@@ -163,7 +167,7 @@ function player:resolveCollision(entity, dir)
 		if entity.id == "platform" then
 			self:hitSide(entity, dir)
 		end
-		if entity.id == "breadman" and (not entity.dead) then
+		if entity.drawLayer == "breadman" and (not entity.dead) then
 			if (dir ~= "down" and dir ~= "in") or entity.standingOn ~= 0 then
 				if self.invuln <= 0 then self:getHit(entity) end
 			else

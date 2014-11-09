@@ -1,7 +1,7 @@
 projectile = class:new()
 
 function projectile:init(args)
-	self.id = "projectile"
+	self.id = "projectile"; self.drawLayer = "projectile"
 
 	self.x = args[1]
 	self.y = args[2]

@@ -1,7 +1,7 @@
 background = class:new()
 
 function background:init(args)
-	self.id = "background"
+	self.id = "background"; self.drawLayer = "background"
 
 	self.x = args[1]
 	self.y = args[2]

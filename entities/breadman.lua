@@ -2,7 +2,7 @@ breadman = class:new()
 
 function breadman:init(args)
 
-	self.id = "breadman"
+	self.id = "breadman"; self.drawLayer = "breadman"
 
 	self.x = args[1]
 	self.y = args[2]
@@ -36,7 +36,7 @@ function breadman:update(dt)
 
 	--"ai"
 	if self.onGround then self.vx = self.vx - (self.vx - 100*self.moveDir)*3*dt end
-	--if self.onGround then self.flipTimer = self.flipTimer - dt end
+	if self.standingOn ~= 0 then self.flipTimer = self.flipTimer - dt end
 	if self.flipTimer < 0 then
 		self.moveDir = -self.moveDir
 		self.flipTimer = math.random()*4+3
@@ -55,6 +55,7 @@ function breadman:update(dt)
 	--level bounds
 	if self.x+self.w+20 < 0 or self.x-20 > gameWidth or self.y-20 > gameHeight then
 		self.die = true
+		if not self.dead then numEnemies = numEnemies - 1 end
 	end
 
 	--gravity
